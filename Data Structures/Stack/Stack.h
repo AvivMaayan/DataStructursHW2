@@ -2,6 +2,7 @@
 #define STACK_H
 
 #include <iostream>
+#include "../Exeptions/exeptions.h"
 
 using std::cout;
 using std::endl;
@@ -32,7 +33,8 @@ public:
     Stack();
     Stack(const Stack<T> &copy);
     ~Stack();
-    void insert(T t);
+    bool isEmpty();
+    void push(T t);
     T top() const;   
     T pop();
 };
@@ -95,12 +97,14 @@ template <class T>
 Stack<T>::Stack(const Stack<T> &copy)
 {
     this->head = new Node<T>(copy->head);
+    if(!head)
+        throw Allocation_Error();
 }
 
 template <class T>
 Stack<T>::~Stack()
 {
-    while(this->head->getNext() != nullptr)
+    while(!isEmpty())
     [
         this.pop();
     ]
@@ -108,10 +112,21 @@ Stack<T>::~Stack()
 }
 
 template <class T>
-void Stack<T>::insert(T t)
+bool Stack<T>::isEmpty()
+{
+    return head->getNext() == nullptr;
+}
+
+template <class T>
+void Stack<T>::push(T t)
 {
     Node<T> temp = this->head->getNext();
     Node<T> curr = new Node<T>(t);
+    if(!curr)
+    {
+        throw Allocation_Error();
+        return;
+    }
     this->head->setNext(curr);
     curr.setNext(temp);
 }
@@ -119,7 +134,7 @@ void Stack<T>::insert(T t)
 template <class T>
 T Stack<T>::top() const
 {
-    if(head->getNext() == nullptr)
+    if(isEmpty())
         return NULL;
     return head->getNext()->value;
 }
@@ -127,7 +142,7 @@ T Stack<T>::top() const
 template <class T>
 T Stack<T>::pop() 
 {
-    if(head->getNext() == nullptr)
+    if(isEmpty())
         return NULL;
     Node<T>* to_delete = head->getNext();
     T to_return = to_delete->value;
