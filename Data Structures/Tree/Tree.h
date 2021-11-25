@@ -50,7 +50,7 @@ public:
     const_iterator &begin() const;
     const_iterator &end() const;
     //Aviv:
-    const_iterator *search(const T t) const;
+    const_iterator search(const T t) const;
     void insert(int key, const T t);
     void remove(int key); //remove a vertice by its key
     void remove(const const_iterator& iterator); //remove a vertice pointed by an iterator
@@ -132,17 +132,22 @@ Tree<T>::~Tree()
 }
 
 template <class T>
-TNode<T> *Tree<T>::search(const T t) const
+Tree<T>::const_iterator Tree<T>::search(const T t) const
 {
 }
 
 template <class T>
-void Tree<T>::insert(const T t)
+void Tree<T>::insert(int key, const T t)
 {
 }
 
 template <class T>
-void Tree<T>::remove(T t)
+void Tree<T>::remove(int key)
+{
+}
+
+template <class T>
+void Tree<T>::remove(const const_iterator& iterator)
 {
 }
 
