@@ -120,8 +120,8 @@ bool Stack<T>::isEmpty()
 template <class T>
 void Stack<T>::push(T t)
 {
-    Node<T> temp = this->head->getNext();
-    Node<T> curr = new Node<T>(t);
+    Node<T>* temp = this->head->getNext();
+    Node<T>* curr = new Node<T>(t);
     if(!curr)
     {
         throw Allocation_Error();
