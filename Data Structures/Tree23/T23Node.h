@@ -7,6 +7,7 @@ class T23Node
 private:
     int key1, key2;
     int num_of_keys;
+    T23Node<T> *parent;
     T23Node<T> *left;
     T23Node<T> *middle;
     T23Node<T> *right;
@@ -21,9 +22,11 @@ public:
     bool isLeaf() const;
     void setKey1(int new_key);
     void setKey2(int new_key);
+    T23Node<T> *getParent() const;
     T23Node<T> *getLeft() const;
     T23Node<T> *getMiddle() const;
     T23Node<T> *getRight() const;
+    void setParent(T23Node<T> *node);
     void setLeft(T23Node<T> *node);
     void setMiddle(T23Node<T> *node);
     void setRight(T23Node<T> *node);
@@ -60,6 +63,12 @@ void T23Node<T>::setKey2(int new_key)
 }
 
 template <class T>
+T23Node<T> *T23Node<T>::getParent() const
+{
+    return parent;
+}
+
+template <class T>
 T23Node<T> *T23Node<T>::getLeft() const
 {
     return left;
@@ -75,6 +84,12 @@ template <class T>
 T23Node<T> *T23Node<T>::getRight() const
 {
     return right;
+}
+
+template <class T>
+void T23Node<T>::setParent(T23Node<T> *node)
+{
+    parent = node;
 }
 
 template <class T>

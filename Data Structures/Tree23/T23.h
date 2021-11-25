@@ -12,35 +12,47 @@ class T23
 {
 private:
     T23Node<T> *root;
-    friend class pre_iterator;
-    friend class in_iterator;
-    friend class post_iterator;
+    T23Node<T> *left_most;
+    T23Node<T> *right_most;
+    friend class const_iterator;
 
 public:
-    class pre_iterator;
-    class in_iterator;
-    class post_iterator;
+    class const_iterator;
     T23() : root(nullptr){};
     T23(const T23<T> &copy) = delete;
     ~T23();
 
-    //iterators for different traversels (pre, in, post order)
-    pre_iterator &begin() const; 
-    pre_iterator &end() const;
-    in_iterator &begin() const;
-    in_iterator &end() const;
-    post_iterator &begin() const;
-    post_iterator &end() const;
-    T23Node<T>* search(T t) const;
+    //iterators for different traversels
+    const_iterator &begin() const; 
+    const_iterator &end() const;
 
-    void insert(T t);
+    T23Node<T>* search(T t) const;
+    void insert(T t) const;
     void remove(T t);
 };
 
 template <class T>
 T23<T>::~T23()
 {
+
+}
+
+template <class T>
+T23Node<T>* T23<T>::search(T t) const
+{
     
 }
 
-#endif //TREE_H
+template <class T>
+void T23<T>::insert(T t) const
+{
+    
+}
+
+template <class T>
+void T23<T>::remove(T t)
+{
+    
+}
+
+#endif //TREE_23_H
