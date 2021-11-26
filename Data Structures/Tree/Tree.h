@@ -248,6 +248,18 @@ TNode<T>* Tree<T>::next_bigger(TNode<T>* vertice)
 }
 
 template <class T>
+TNode<T>* Tree<T>::next_smaller(TNode<T>* vertice)
+{
+    assert(vertice->getParent() != nullptr); //vertice can't be the root when getting here
+    assert(vertice != left_most); //vertice can't be the biggest leaf when geting here
+    TNode<T>* parent = vertice->getParent();
+    if(parent->getRight() == vertice) { //vertice is bigger than his parent
+        return parent;
+    }
+    next_bigger(parent);
+}
+
+template <class T>
 Tree<T>::const_iterator Tree<T>::search(const T t) const
 {
 }
