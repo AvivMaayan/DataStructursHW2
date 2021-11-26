@@ -27,6 +27,7 @@ public:
     void setParent(TNode<T> *node);
     void setLeft(TNode<T> *node);
     void setRight(TNode<T> *node);
+    int calculate_update_balance();
 };
 
 template <class T>
@@ -88,6 +89,13 @@ template <class T>
 void TNode<T>::setRight(TNode<T> *node)
 {
     right = node;
+}
+
+template <class T>
+int TNode<T>::calculate_update_balance()
+{
+    balance = left->height - right->height
+    return balance;
 }
 
 #endif

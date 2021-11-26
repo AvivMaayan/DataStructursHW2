@@ -16,6 +16,7 @@
         "xlocinfo": "cpp",
         "xmemory": "cpp",
         "xutility": "cpp",
-        "algorithm": "cpp"
+        "algorithm": "cpp",
+        "xiosbase": "cpp"
     }
 }
