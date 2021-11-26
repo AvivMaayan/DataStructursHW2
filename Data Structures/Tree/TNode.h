@@ -1,5 +1,5 @@
-#ifndef NODE_23_
-#define NODE_23_
+#ifndef NODE_H_
+#define NODE_H_
 
 template <class T>
 class TNode
@@ -7,7 +7,7 @@ class TNode
 private:
     int key;
     int height;
-    int balance; 
+    int balance;
     TNode<T> *parent;
     TNode<T> *left;
     TNode<T> *right;
@@ -15,11 +15,12 @@ private:
 
 public:
     TNode() = delete;
-    explicit TNode(int key, T data, TNode<T>* parent = nullptr);
+    explicit TNode(int key, T data, TNode<T> *parent = nullptr);
     TNode(const TNode<T> &copy) = delete;
     ~TNode() = default;
     const T &getData() const;
     const T &getKey() const;
+    void setData(T new_data);
     bool isLeaf() const;
     TNode<T> *getParent() const;
     TNode<T> *getLeft() const;
@@ -27,12 +28,30 @@ public:
     void setParent(TNode<T> *node);
     void setLeft(TNode<T> *node);
     void setRight(TNode<T> *node);
+    void updateBalance();
+    void updateHeight();
 };
 
 template <class T>
-TNode<T>::TNode(int key, T data, TNode<T>* parent)
-    :height(0), balance(0), key(key), left(nullptr), right(nullptr), data(data), parent(parent)
+TNode<T>::TNode(int key, T data, TNode<T> *parent)
+    : height(0), balance(0), key(key), left(nullptr), right(nullptr), data(data), parent(parent)
 {
+}
+
+template <class T>
+void TNode<T>::updateBalance()
+{
+    int l_height = (left == nullptr) ? -1 : left->height;
+    int r_height = (right == nullptr) ? -1 : right->height;
+    balance = l_height - r_height;
+}
+
+template <class T>
+void TNode<T>::updateHeight()
+{
+    int l_height = (left == nullptr) ? -1 : left->height;
+    int r_height = (right == nullptr) ? -1 : right->height;
+    height = std::max(l_height,r_height)+1;
 }
 
 template <class T>
@@ -45,6 +64,12 @@ template <class T>
 const T &TNode<T>::getKey() const
 {
     return key;
+}
+
+template <class T>
+void TNode<T>::setData(T new_data)
+{
+    data = new_data;
 }
 
 template <class T>
@@ -64,7 +89,6 @@ TNode<T> *TNode<T>::getLeft() const
 {
     return left;
 }
-
 
 template <class T>
 TNode<T> *TNode<T>::getRight() const
@@ -90,4 +114,4 @@ void TNode<T>::setRight(TNode<T> *node)
     right = node;
 }
 
-#endif
+#endif // NODE_H_
