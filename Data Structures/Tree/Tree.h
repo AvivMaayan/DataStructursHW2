@@ -18,6 +18,8 @@ private:
     void LL(TNode<T>* not_balanced);
     void RL(TNode<T>* not_balanced);
     void LR(TNode<T>* not_balanced);
+    TNode<T> *next_bigger(TNode<T>* vertice);
+    TNode<T> *next_smaller(TNode<T>* vertice);
     friend class const_iterator;
 
 public:
@@ -68,6 +70,8 @@ Tree<T>::const_iterator ::const_iterator(const const_iterator &copy)
     this->element = copy.element;
 }
 
+
+
 template <class T>
 typename Tree<T>::const_iterator &Tree<T>::const_iterator ::operator=(const const_iterator &it)
 {
@@ -78,14 +82,30 @@ typename Tree<T>::const_iterator &Tree<T>::const_iterator ::operator=(const cons
 template <class T>
 typename Tree<T>::const_iterator &Tree<T>::const_iterator ::operator++()
 {
-    //this->element = this->element->getNext();
+    if(this->element == right_most) { //biggest element, no where to continue
+        return nullptr;
+    }
+    if(this->element->getRight() != nullptr) { //the next bigger one is the right son
+        this->element = this->element->getRight();
+    }
+    else{
+        this->element = next_bigger(this->element);
+    }
     return *this;
 }
 
 template <class T>
 typename Tree<T>::const_iterator &Tree<T>::const_iterator ::operator--()
 {
-    //this->element = this->element->getNext();
+    if(this->element == left_most) { //smallest element, no where to continue
+        return nullptr;
+    }
+    if(this->element->getLeft() != nullptr) { //the next smaller one is the left son
+        this->element = this->element->getLeft();
+    }
+    else{
+        this->element = next_smaller(this->element);
+    }
     return *this;
 }
 template <class T>
@@ -213,6 +233,18 @@ void Tree<T>::RL(TNode<T>* not_balanced)
     TNode<T>* parent = not_balanced->getParent();
     RR(right_son);
     LL(parent);
+}
+
+template <class T>
+TNode<T>* Tree<T>::next_bigger(TNode<T>* vertice)
+{
+    assert(vertice->getParent() != nullptr); //vertice can't be the root when getting here
+    assert(vertice != right_most); //vertice can't be the biggest leaf when geting here
+    TNode<T>* parent = vertice->getParent();
+    if(parent->getLeft() == vertice) { //vertice is smaller than his parent
+        return parent;
+    }
+    next_bigger(parent);
 }
 
 template <class T>

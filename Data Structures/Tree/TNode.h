@@ -1,5 +1,5 @@
-#ifndef NODE_23_
-#define NODE_23_
+#ifndef NODE_H_
+#define NODE_H_
 
 template <class T>
 class TNode
