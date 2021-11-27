@@ -14,10 +14,10 @@ private:
     TNode<T> *root;
     TNode<T> *left_most;
     TNode<T> *right_most;
-    void RR(TNode<T>* not_balanced);
-    void LL(TNode<T>* not_balanced);
-    void RL(TNode<T>* not_balanced);
-    void LR(TNode<T>* not_balanced);
+    TNode<T>* RR(TNode<T>* not_balanced);
+    TNode<T>* LL(TNode<T>* not_balanced);
+    TNode<T>* RL(TNode<T>* not_balanced);
+    TNode<T>* LR(TNode<T>* not_balanced);
     TNode<T> *next_bigger(TNode<T>* vertice);
     TNode<T> *next_smaller(TNode<T>* vertice);
     friend class const_iterator;
@@ -150,7 +150,7 @@ Tree<T>::~Tree()
 }
 
 template <class T>
-void Tree<T>::LL(TNode<T>* not_balanced)
+TNode<T>* Tree<T>::LL(TNode<T>* not_balanced)
 {
     //helpful definitions: 
     TNode<T>* parent = not_balanced->getParent();
@@ -181,10 +181,11 @@ void Tree<T>::LL(TNode<T>* not_balanced)
     }
     A->calculate_update_balance();
     not_balanced->calculate_update_balance();
+    return A;
 }
 
 template <class T>
-void Tree<T>::RR(TNode<T>* not_balanced)
+TNode<T>* Tree<T>::RR(TNode<T>* not_balanced)
 {
     //helpful definitions: 
     TNode<T>* parent = not_balanced->getParent();
@@ -215,24 +216,23 @@ void Tree<T>::RR(TNode<T>* not_balanced)
     }
     A->calculate_update_balance();
     not_balanced->calculate_update_balance();
+    return A;
 }
 
 template <class T>
-void Tree<T>::LR(TNode<T>* not_balanced) 
+TNode<T>* Tree<T>::LR(TNode<T>* not_balanced) 
 {
     TNode<T>* left_son = not_balanced->getLeft();
-    TNode<T>* parent = not_balanced->getParent();
     LL(left_son);
-    RR(parent);
+    return RR(not_balanced);
 }
 
 template <class T>
-void Tree<T>::RL(TNode<T>* not_balanced) 
+TNode<T>* Tree<T>::RL(TNode<T>* not_balanced) 
 {
     TNode<T>* right_son = not_balanced->getRight();
-    TNode<T>* parent = not_balanced->getParent();
     RR(right_son);
-    LL(parent);
+    return LL(not_balanced);
 }
 
 template <class T>
