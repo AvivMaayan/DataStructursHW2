@@ -173,19 +173,29 @@ TNode<T> *Tree<T>::internalInsert(TNode<T> *node, int key_to_insert, const T dat
     int key = node->getKey();
     if (key_to_insert == key)
     {
-        //Do we want to enable information updating?//
+        // Do we want to enable information updating?//
         node->setData(data);
         return node;
     }
     else if (key_to_insert > key)
     {
         node->right = internalInsert(node->right, key_to_insert, data);
-        //Rotations//
+        // Rotations//
+        if (node->getBalance() == 2)
+        {
+            if (node->right->getBalance() == 1)
+            {
+                
+            }
+            else
+            {
+            }
+        }
     }
     else
     {
         node->left = internalInsert(node->left, key_to_insert, data);
-        //Rotations//
+        // Rotations//
     }
     node->updateHeight();
     node->updateBalance();
