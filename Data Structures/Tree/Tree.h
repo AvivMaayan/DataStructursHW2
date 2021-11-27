@@ -2,7 +2,7 @@
 #define TREE_H_
 
 #include <iostream>
-#include "TNode.h">
+#include "TNode.h"
 
 using std::cout;
 using std::endl;
@@ -12,11 +12,20 @@ class Tree
 {
 private:
     TNode<T> *root;
+    // left_most and right_most needs to be on TNode
+    // OR- Tree getMin()/Max() func
     TNode<T> *left_most;
     TNode<T> *right_most;
+    TNode<T> *RR(TNode<T> *not_balanced);
+    TNode<T> *LL(TNode<T> *not_balanced);
+    TNode<T> *RL(TNode<T> *not_balanced);
+    TNode<T> *LR(TNode<T> *not_balanced);
+    /// I am assuming that Rotation functions will return the new root
+    TNode<T> *rotate(TNode<T> *not_balanced);
     friend class const_iterator;
     TNode<T> *internalSearch(TNode<T> *node, int key_to_find) const;
     TNode<T> *internalInsert(TNode<T> *node, int key_to_insert, const T data);
+    TNode<T> *internalRemove(TNode<T> *node, int key_to_remove);
 
 public:
     class const_iterator
@@ -142,6 +151,33 @@ bool Tree<T>::isEmpty() const
 }
 
 template <class T>
+TNode<T> *Tree<T>::rotate(TNode<T> *not_balanced)
+{
+    if (not_balanced == nullptr)
+        return nullptr;
+    not_balanced->updateHeight();
+    not_balanced->updateBalance();
+    if (not_balanced->getBalance() == 2)
+    {
+        if (not_balanced->getLeft()->getBalance() == -1)
+        {
+            return LR(not_balanced);
+        }
+        else
+            return LL(not_balanced);
+    }
+    else if (not_balanced->getBalance() == -2)
+    {
+        if (not_balanced->getRight()->getBalance() == 1)
+        {
+            return RL(not_balanced);
+        }
+        else
+            return RR(not_balanced);
+    }
+}
+
+template <class T>
 TNode<T> *Tree<T>::internalSearch(TNode<T> *node, int key_to_find) const
 {
     if (node == nullptr)
@@ -169,37 +205,27 @@ template <class T>
 TNode<T> *Tree<T>::internalInsert(TNode<T> *node, int key_to_insert, const T data)
 {
     if (node == nullptr)
-        node = new TNode(key_to_insert, data);
-    int key = node->getKey();
-    if (key_to_insert == key)
     {
-        // Do we want to enable information updating?//
-        node->setData(data);
-        return node;
-    }
-    else if (key_to_insert > key)
-    {
-        node->right = internalInsert(node->right, key_to_insert, data);
-        // Rotations//
-        if (node->getBalance() == 2)
-        {
-            if (node->right->getBalance() == 1)
-            {
-                
-            }
-            else
-            {
-            }
-        }
+        return new TNode(key_to_insert, data);
     }
     else
     {
-        node->left = internalInsert(node->left, key_to_insert, data);
-        // Rotations//
+        int key = node->getKey();
+        if (key_to_insert == key)
+        {
+            // Do we want to enable information updating?//
+            node->setData(data);
+        }
+        else if (key_to_insert > key)
+        {
+            node->setRight(internalInsert(node->getRight(), key_to_insert, data));
+        }
+        else
+        {
+            node->setLeft(internalInsert(node->getLeft(), key_to_insert, data));
+        }
     }
-    node->updateHeight();
-    node->updateBalance();
-    return node;
+    return rotate(node);
 }
 
 template <class T>
@@ -209,13 +235,56 @@ void Tree<T>::insert(int key, const T data)
 }
 
 template <class T>
+TNode<T> *Tree<T>::internalRemove(TNode<T> *node, int key_to_remove)
+{
+    if (node == nullptr)
+        return nullptr;
+    int key = node->getKey();
+    if (key_to_remove == key)
+    {
+        if (node->getRight() != nullptr && node->getLeft() != nullptr)
+        {
+            TNode<T> *next_node = node->getRight()->getMin();
+            node->setKey(next_node->getKey());
+            node->setData(next_node->getData());
+            node->setRight(internalRemove(node->getRight(), next_node->getKey()));
+            // rotate?
+        }
+        else
+        {
+            TNode<T> *tmpNode = node;
+            if (node->getRight() == nullptr)
+            {
+                node = node->getLeft();
+            }
+            else if (node->getLeft() == nullptr)
+            {
+                node = node->getRight();
+            }
+            delete tmpNode;
+        }
+    }
+    else if (key_to_remove > key)
+    {
+        node->setRight(internalRemove(node->getRight(), key_to_remove));
+    }
+    else
+    {
+        node->setLeft(internalRemove(node->getLeft(), key_to_remove));
+    }
+    return rotate(node);
+}
+
+template <class T>
 void Tree<T>::remove(int key)
 {
+    root = internalRemove(root, key);
 }
 
 template <class T>
 void Tree<T>::removeByIt(const Tree<T>::const_iterator &iterator)
 {
+    //Leaving this out for now
 }
 
 template <class T>

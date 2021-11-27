@@ -27,6 +27,7 @@ public:
     TNode<T> *getParent() const;
     TNode<T> *getLeft() const;
     TNode<T> *getRight() const;
+    TNode<T> *getMin() const;
     void setParent(TNode<T> *node);
     void setLeft(TNode<T> *node);
     void setRight(TNode<T> *node);
@@ -108,6 +109,16 @@ template <class T>
 TNode<T> *TNode<T>::getRight() const
 {
     return right;
+}
+
+template <class T>
+TNode<T> *TNode<T>::getMin() const
+{
+    if (left == nullptr)
+    {
+        return this;
+    }
+    return left->getMin();
 }
 
 template <class T>
