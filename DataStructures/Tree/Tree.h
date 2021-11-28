@@ -63,6 +63,9 @@ public:
     void insert(int key, const T data);
     void remove(int key);                            // remove a vertice by its key
     void removeByIt(const const_iterator &iterator); // remove a vertice pointed by an iterator
+    //to be deleted at the end:
+    void printTree() const;
+    void printTree(const std::string& prefix, const TNode<T>* node, bool isLeft) const;
 };
 ////////////////////////IMPLEMENTATION///////////////////////
 
@@ -398,6 +401,30 @@ template <class T>
 Tree<T>::const_iterator &Tree<T>::end() const
 {
     return const_iterator(right_most);
+}
+
+template <class T>
+void Tree<T>::printTree() const
+{
+    printBT("", root , false);
+}
+
+template <class T>
+void Tree<T>::printTree(const std::string& prefix, const TNode<T>* node, bool isLeft) const
+{
+    if( node != nullptr )
+    {
+        std::cout << prefix;
+
+        std::cout << (isLeft ? "├──" : "└──" );
+
+        // print the value of the node
+        std::cout << node->getData() << std::endl;
+
+        // enter the next tree level - left and right branch
+        printBT( prefix + (isLeft ? "│   " : "    "), node->left, true);
+        printBT( prefix + (isLeft ? "│   " : "    "), node->right, false);
+    }
 }
 
 #endif // TREE_H_
