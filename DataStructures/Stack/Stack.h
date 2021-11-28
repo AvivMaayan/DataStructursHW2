@@ -31,13 +31,13 @@ private:
 
 public:
     Stack();
-    Stack(const Stack<T> &copy);
+    Stack(const Stack<T> &copy) = default;
     ~Stack();
-    bool isEmpty();
+    bool isEmpty() const;
     void push(T t);
     T top() const;   
     T pop();
-    void printStack();
+    void printStack() const;
 };
 /**
  * implementation
@@ -52,7 +52,7 @@ Node<T>::Node()
 template <class T>
 Node<T>::Node(T value)
 {
-    value = T(value);
+    this->value = T(value);
     this->Next = nullptr;
 }
 
@@ -89,31 +89,17 @@ Stack<T>::Stack()
 }
 
 template <class T>
-Stack<T>::Stack()
-{
-    this->head = new Node<T>();
-}
-
-template <class T>
-Stack<T>::Stack(const Stack<T> &copy)
-{
-    this->head = new Node<T>(copy->head);
-    if(!head)
-        throw Allocation_Error();
-}
-
-template <class T>
 Stack<T>::~Stack()
 {
     while(!isEmpty())
     {
-        this.pop();
+        this->pop();
     }
     delete head; 
 }
 
 template <class T>
-bool Stack<T>::isEmpty()
+bool Stack<T>::isEmpty() const
 {
     return head->getNext() == nullptr;
 }
@@ -129,7 +115,7 @@ void Stack<T>::push(T t)
         return;
     }
     this->head->setNext(curr);
-    curr.setNext(temp);
+    curr->setNext(temp);
 }
 
 template <class T>
@@ -140,7 +126,7 @@ T Stack<T>::top() const
         throw Empty_Structure();
         return NULL;
     }
-    return head->getNext()->value;
+    return head->getNext()->getData();
 }
 
 template <class T>
@@ -152,15 +138,15 @@ T Stack<T>::pop()
         return NULL;
     }
     Node<T>* to_delete = head->getNext();
-    T to_return = to_delete->value;
+    T to_return = to_delete->getData();
     head->setNext(to_delete->getNext());
     delete to_delete;
     return to_return;
 }
 
 template <class T>
-void Stack<T>::printStack() {
-    Node<T>* iterator = this->head;
+void Stack<T>::printStack() const {
+    Node<T>* iterator = this->head->getNext();
     while(iterator != nullptr){
         cout << iterator->getData() << " ";
         iterator = iterator->getNext();
