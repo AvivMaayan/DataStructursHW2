@@ -25,6 +25,9 @@ private:
     TNode<T>* LR(TNode<T>* not_balanced);
     TNode<T> *next_bigger(TNode<T>* vertice);
     TNode<T> *next_smaller(TNode<T>* vertice);
+    //need to implement?
+    //TNode<T> *get_rightest();
+    //TNode<T> *get_leftest();
     friend class const_iterator;
     TNode<T> *internalSearch(TNode<T> *node, int key_to_find) const;
     TNode<T> *internalInsert(TNode<T> *node, int key_to_insert, const T data);
@@ -50,7 +53,7 @@ public:
         bool operator!=(const const_iterator &it) const;
         const T &operator*() const;
     };
-    Tree() : root(nullptr){};
+    Tree();
     Tree(const Tree<T> &copy) = delete;
     ~Tree();
 
@@ -156,6 +159,8 @@ TNode<T> *Tree<T>::const_iterator ::getNode() const
 }
 
 //////// Tree ////////
+template <class T>
+Tree<T>::Tree() : root(nullptr){}
 
 template <class T>
 Tree<T>::~Tree()
@@ -281,6 +286,7 @@ TNode<T> *Tree<T>::rotate(TNode<T> *not_balanced)
     }
 }
 
+
 template <class T>
 TNode<T> *Tree<T>::internalSearch(TNode<T> *node, int key_to_find) const
 {
@@ -392,13 +398,13 @@ void Tree<T>::removeByIt(const Tree<T>::const_iterator &iterator)
 }
 
 template <class T>
-Tree<T>::const_iterator &Tree<T>::begin() const
+typename Tree<T>::const_iterator &Tree<T>::begin() const
 {
     return const_iterator(left_most);
 }
 
 template <class T>
-Tree<T>::const_iterator &Tree<T>::end() const
+typename Tree<T>::const_iterator &Tree<T>::end() const
 {
     return const_iterator(right_most);
 }
@@ -406,7 +412,7 @@ Tree<T>::const_iterator &Tree<T>::end() const
 template <class T>
 void Tree<T>::printTree() const
 {
-    printBT("", root , false);
+    printTree("", root , false);
 }
 
 template <class T>

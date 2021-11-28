@@ -143,7 +143,7 @@ void TNode<T>::setRight(TNode<T> *node)
 template <class T>
 int TNode<T>::calculate_update_balance()
 {
-    balance = left->height - right->height
+    balance = left->height - right->height;
     return balance;
 }
 

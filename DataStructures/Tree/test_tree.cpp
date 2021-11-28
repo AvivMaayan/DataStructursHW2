@@ -73,24 +73,24 @@ int main()
     cout<< "Testing iterator ++" <<endl;
     it = tree.search(10);
     cout << *it << endl;
-    it++;
+    ++it;
     cout << *it << endl;
-    it++;
+    ++it;
     cout << *it << endl;
-    it++;
+    ++it;
     cout << *it << endl;
-    it++; //nowhere to go
+    ++it; //nowhere to go
     cout << *it << endl;
     THEWALL()
 
     TEST(1.7)
     cout<< "Testing iterator --" <<endl;
-    it--;
+    --it;
     cout << *it << endl;
-    it--;
+    --it;
     cout << *it << endl;
     it = tree.search(3);
-    it--;
+    --it;
     cout << *it << endl;
 
 
