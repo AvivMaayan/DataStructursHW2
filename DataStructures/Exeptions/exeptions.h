@@ -42,5 +42,9 @@ public:
     explicit Failiure() : Exception("Failiure"){};
 };
 //------------------------------------------------------------------------
-
+class Empty_Structure : public Exception
+{
+public:
+    explicit Empty_Structure() : Exception("Empty Structure"){};
+};
 #endif // EXPECPTIONS_H

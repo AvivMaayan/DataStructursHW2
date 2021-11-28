@@ -37,6 +37,7 @@ public:
     void push(T t);
     T top() const;   
     T pop();
+    void printStack();
 };
 /**
  * implementation
@@ -105,9 +106,9 @@ template <class T>
 Stack<T>::~Stack()
 {
     while(!isEmpty())
-    [
+    {
         this.pop();
-    ]
+    }
     delete head; 
 }
 
@@ -135,7 +136,10 @@ template <class T>
 T Stack<T>::top() const
 {
     if(isEmpty())
+    {
+        throw Empty_Structure();
         return NULL;
+    }
     return head->getNext()->value;
 }
 
@@ -143,12 +147,25 @@ template <class T>
 T Stack<T>::pop() 
 {
     if(isEmpty())
+    {
+        throw Empty_Structure();
         return NULL;
+    }
     Node<T>* to_delete = head->getNext();
     T to_return = to_delete->value;
     head->setNext(to_delete->getNext());
     delete to_delete;
     return to_return;
+}
+
+template <class T>
+void Stack<T>::printStack() {
+    Node<T>* iterator = this->head;
+    while(iterator != nullptr){
+        cout << iterator->getData() << " ";
+        iterator = iterator->getNext();
+    }
+    cout << endl;
 }
 
 #endif //STACK_H

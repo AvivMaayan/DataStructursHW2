@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include "TNode.h"
+#include <cassert>
 
 using std::cout;
 using std::endl;
