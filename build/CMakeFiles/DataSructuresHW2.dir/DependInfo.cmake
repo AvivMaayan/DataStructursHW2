@@ -9,6 +9,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "C:/Users/nitai/Documents/Technion/Semester3/Data Structures/DataStructursHW2/DataStructures/Stack/test_stack.cpp" "CMakeFiles/DataSructuresHW2.dir/DataStructures/Stack/test_stack.cpp.obj" "gcc" "CMakeFiles/DataSructuresHW2.dir/DataStructures/Stack/test_stack.cpp.obj.d"
+  "C:/Users/nitai/Documents/Technion/Semester3/Data Structures/DataStructursHW2/DataStructures/Tree/test_tree.cpp" "CMakeFiles/DataSructuresHW2.dir/DataStructures/Tree/test_tree.cpp.obj" "gcc" "CMakeFiles/DataSructuresHW2.dir/DataStructures/Tree/test_tree.cpp.obj.d"
   )
 
 # Targets to which this target links.

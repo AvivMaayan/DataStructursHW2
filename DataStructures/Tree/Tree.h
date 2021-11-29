@@ -13,11 +13,8 @@ class Tree
 {
 private:
     TNode<T> *root;
-    // left_most and right_most needs to be on TNode
-    // OR- Tree getMin()/Max() func
     TNode<T> *left_most;
     TNode<T> *right_most;
-    /// I am assuming that Rotation functions will return the new root
     TNode<T> *rotate(TNode<T> *not_balanced);
     TNode<T>* RR(TNode<T>* not_balanced);
     TNode<T>* LL(TNode<T>* not_balanced);
@@ -34,6 +31,21 @@ private:
     TNode<T> *internalRemove(TNode<T> *node, int key_to_remove);
 
 public:
+    class const_iterator;
+    Tree();
+    Tree(const Tree<T> &copy) = delete;
+    ~Tree();
+    const_iterator &begin() const;
+    const_iterator &end() const;
+    bool isEmpty() const;
+    const_iterator &search(const int key) const;
+    void insert(int key, const T data);
+    void remove(int key);                            // remove a vertice by its key
+    void removeByIt(const const_iterator &iterator); // remove a vertice pointed by an iterator
+    //to be deleted at the end:
+    void printTree() const;
+    void printTree(const std::string& prefix, const TNode<T>* node, bool isLeft) const;
+
     class const_iterator
     {
     private:
@@ -53,22 +65,6 @@ public:
         bool operator!=(const const_iterator &it) const;
         const T &operator*() const;
     };
-    Tree();
-    Tree(const Tree<T> &copy) = delete;
-    ~Tree();
-
-    // iterators for different traversels
-    const_iterator &begin() const;
-    const_iterator &end() const;
-    // Aviv:
-    bool isEmpty() const;
-    const_iterator &search(const int key) const;
-    void insert(int key, const T data);
-    void remove(int key);                            // remove a vertice by its key
-    void removeByIt(const const_iterator &iterator); // remove a vertice pointed by an iterator
-    //to be deleted at the end:
-    void printTree() const;
-    void printTree(const std::string& prefix, const TNode<T>* node, bool isLeft) const;
 };
 ////////////////////////IMPLEMENTATION///////////////////////
 
@@ -97,9 +93,9 @@ typename Tree<T>::const_iterator &Tree<T>::const_iterator ::operator=(const cons
 template <class T>
 typename Tree<T>::const_iterator &Tree<T>::const_iterator ::operator++()
 {
-    if(this->element == right_most) { //biggest element, no where to continue
-        return nullptr;
-    }
+    /**if(this->element == this.right_most) { //biggest element, no where to continue
+       return nullptr;
+    }*/
     if(this->element->getRight() != nullptr) { //the next bigger one is the right son
         this->element = this->element->getRight();
     }
@@ -112,9 +108,9 @@ typename Tree<T>::const_iterator &Tree<T>::const_iterator ::operator++()
 template <class T>
 typename Tree<T>::const_iterator &Tree<T>::const_iterator ::operator--()
 {
-    if(this->element == left_most) { //smallest element, no where to continue
+    /**if(this->element == left_most) { //smallest element, no where to continue
         return nullptr;
-    }
+    }*/
     if(this->element->getLeft() != nullptr) { //the next smaller one is the left son
         this->element = this->element->getLeft();
     }
@@ -160,7 +156,9 @@ TNode<T> *Tree<T>::const_iterator ::getNode() const
 
 //////// Tree ////////
 template <class T>
-Tree<T>::Tree() : root(nullptr){}
+Tree<T>::Tree(){
+    
+}
 
 template <class T>
 Tree<T>::~Tree()

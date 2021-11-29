@@ -14,7 +14,7 @@ private:
     T data;
 
 public:
-    TNode() = delete;
+    TNode();
     explicit TNode(int key, T data, TNode<T> *parent = nullptr);
     TNode(const TNode<T> &copy) = delete;
     ~TNode() = default;
@@ -27,7 +27,7 @@ public:
     TNode<T> *getParent() const;
     TNode<T> *getLeft() const;
     TNode<T> *getRight() const;
-    TNode<T> *getMin() const;
+    const TNode<T> *getMin() const;
     void setParent(TNode<T> *node);
     void setLeft(TNode<T> *node);
     void setRight(TNode<T> *node);
@@ -113,7 +113,7 @@ TNode<T> *TNode<T>::getRight() const
 }
 
 template <class T>
-TNode<T> *TNode<T>::getMin() const
+const TNode<T> *TNode<T>::getMin() const
 {
     if (left == nullptr)
     {

@@ -526,6 +526,30 @@ DataStructures/Stack/test_stack.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\DataSructuresHW2.dir\build.make CMakeFiles/DataSructuresHW2.dir/DataStructures/Stack/test_stack.cpp.s
 .PHONY : DataStructures/Stack/test_stack.cpp.s
 
+DataStructures/Tree/test_tree.obj: DataStructures/Tree/test_tree.cpp.obj
+.PHONY : DataStructures/Tree/test_tree.obj
+
+# target to build an object file
+DataStructures/Tree/test_tree.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\DataSructuresHW2.dir\build.make CMakeFiles/DataSructuresHW2.dir/DataStructures/Tree/test_tree.cpp.obj
+.PHONY : DataStructures/Tree/test_tree.cpp.obj
+
+DataStructures/Tree/test_tree.i: DataStructures/Tree/test_tree.cpp.i
+.PHONY : DataStructures/Tree/test_tree.i
+
+# target to preprocess a source file
+DataStructures/Tree/test_tree.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\DataSructuresHW2.dir\build.make CMakeFiles/DataSructuresHW2.dir/DataStructures/Tree/test_tree.cpp.i
+.PHONY : DataStructures/Tree/test_tree.cpp.i
+
+DataStructures/Tree/test_tree.s: DataStructures/Tree/test_tree.cpp.s
+.PHONY : DataStructures/Tree/test_tree.s
+
+# target to generate assembly for a file
+DataStructures/Tree/test_tree.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\DataSructuresHW2.dir\build.make CMakeFiles/DataSructuresHW2.dir/DataStructures/Tree/test_tree.cpp.s
+.PHONY : DataStructures/Tree/test_tree.cpp.s
+
 # Help Target
 help:
 	@echo The following are some of the valid targets for this Makefile:
@@ -567,6 +591,9 @@ help:
 	@echo ... DataStructures/Stack/test_stack.obj
 	@echo ... DataStructures/Stack/test_stack.i
 	@echo ... DataStructures/Stack/test_stack.s
+	@echo ... DataStructures/Tree/test_tree.obj
+	@echo ... DataStructures/Tree/test_tree.i
+	@echo ... DataStructures/Tree/test_tree.s
 .PHONY : help
 
 

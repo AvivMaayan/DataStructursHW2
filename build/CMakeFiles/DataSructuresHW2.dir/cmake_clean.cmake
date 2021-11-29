@@ -1,6 +1,8 @@
 file(REMOVE_RECURSE
   "CMakeFiles/DataSructuresHW2.dir/DataStructures/Stack/test_stack.cpp.obj"
   "CMakeFiles/DataSructuresHW2.dir/DataStructures/Stack/test_stack.cpp.obj.d"
+  "CMakeFiles/DataSructuresHW2.dir/DataStructures/Tree/test_tree.cpp.obj"
+  "CMakeFiles/DataSructuresHW2.dir/DataStructures/Tree/test_tree.cpp.obj.d"
   "DataSructuresHW2.exe"
   "DataSructuresHW2.exe.manifest"
   "DataSructuresHW2.pdb"
