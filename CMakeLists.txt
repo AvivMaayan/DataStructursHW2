@@ -9,7 +9,6 @@ set(CMAKE_BUILD_TYPE Debug)
 set(FLAGS_DEBUG "-std=c++11 --pedantic-errors -Wall -Werror")
 set(CMAKE_CPP_FLAGS ${FLAGS_DEBUG})
 set(CPP_FILES 
-./DataStructures/Stack/test_stack.cpp
 ./DataStructures/Tree/test_tree.cpp
 )
 add_executable(DataSructuresHW2 ${CPP_FILES})

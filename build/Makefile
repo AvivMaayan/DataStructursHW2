@@ -502,30 +502,6 @@ DataSructuresHW2/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\DataSructuresHW2.dir\build.make CMakeFiles/DataSructuresHW2.dir/build
 .PHONY : DataSructuresHW2/fast
 
-DataStructures/Stack/test_stack.obj: DataStructures/Stack/test_stack.cpp.obj
-.PHONY : DataStructures/Stack/test_stack.obj
-
-# target to build an object file
-DataStructures/Stack/test_stack.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\DataSructuresHW2.dir\build.make CMakeFiles/DataSructuresHW2.dir/DataStructures/Stack/test_stack.cpp.obj
-.PHONY : DataStructures/Stack/test_stack.cpp.obj
-
-DataStructures/Stack/test_stack.i: DataStructures/Stack/test_stack.cpp.i
-.PHONY : DataStructures/Stack/test_stack.i
-
-# target to preprocess a source file
-DataStructures/Stack/test_stack.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\DataSructuresHW2.dir\build.make CMakeFiles/DataSructuresHW2.dir/DataStructures/Stack/test_stack.cpp.i
-.PHONY : DataStructures/Stack/test_stack.cpp.i
-
-DataStructures/Stack/test_stack.s: DataStructures/Stack/test_stack.cpp.s
-.PHONY : DataStructures/Stack/test_stack.s
-
-# target to generate assembly for a file
-DataStructures/Stack/test_stack.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\DataSructuresHW2.dir\build.make CMakeFiles/DataSructuresHW2.dir/DataStructures/Stack/test_stack.cpp.s
-.PHONY : DataStructures/Stack/test_stack.cpp.s
-
 DataStructures/Tree/test_tree.obj: DataStructures/Tree/test_tree.cpp.obj
 .PHONY : DataStructures/Tree/test_tree.obj
 
@@ -588,9 +564,6 @@ help:
 	@echo ... NightlyTest
 	@echo ... NightlyUpdate
 	@echo ... DataSructuresHW2
-	@echo ... DataStructures/Stack/test_stack.obj
-	@echo ... DataStructures/Stack/test_stack.i
-	@echo ... DataStructures/Stack/test_stack.s
 	@echo ... DataStructures/Tree/test_tree.obj
 	@echo ... DataStructures/Tree/test_tree.i
 	@echo ... DataStructures/Tree/test_tree.s

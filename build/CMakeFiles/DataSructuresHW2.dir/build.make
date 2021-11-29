@@ -68,24 +68,10 @@ include CMakeFiles/DataSructuresHW2.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/DataSructuresHW2.dir/flags.make
 
-CMakeFiles/DataSructuresHW2.dir/DataStructures/Stack/test_stack.cpp.obj: CMakeFiles/DataSructuresHW2.dir/flags.make
-CMakeFiles/DataSructuresHW2.dir/DataStructures/Stack/test_stack.cpp.obj: ../DataStructures/Stack/test_stack.cpp
-CMakeFiles/DataSructuresHW2.dir/DataStructures/Stack/test_stack.cpp.obj: CMakeFiles/DataSructuresHW2.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="C:\Users\nitai\Documents\Technion\Semester3\Data Structures\DataStructursHW2\build\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/DataSructuresHW2.dir/DataStructures/Stack/test_stack.cpp.obj"
-	C:\TDM-GCC-64\bin\x86_64-w64-mingw32-g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/DataSructuresHW2.dir/DataStructures/Stack/test_stack.cpp.obj -MF CMakeFiles\DataSructuresHW2.dir\DataStructures\Stack\test_stack.cpp.obj.d -o CMakeFiles\DataSructuresHW2.dir\DataStructures\Stack\test_stack.cpp.obj -c "C:\Users\nitai\Documents\Technion\Semester3\Data Structures\DataStructursHW2\DataStructures\Stack\test_stack.cpp"
-
-CMakeFiles/DataSructuresHW2.dir/DataStructures/Stack/test_stack.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/DataSructuresHW2.dir/DataStructures/Stack/test_stack.cpp.i"
-	C:\TDM-GCC-64\bin\x86_64-w64-mingw32-g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "C:\Users\nitai\Documents\Technion\Semester3\Data Structures\DataStructursHW2\DataStructures\Stack\test_stack.cpp" > CMakeFiles\DataSructuresHW2.dir\DataStructures\Stack\test_stack.cpp.i
-
-CMakeFiles/DataSructuresHW2.dir/DataStructures/Stack/test_stack.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/DataSructuresHW2.dir/DataStructures/Stack/test_stack.cpp.s"
-	C:\TDM-GCC-64\bin\x86_64-w64-mingw32-g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "C:\Users\nitai\Documents\Technion\Semester3\Data Structures\DataStructursHW2\DataStructures\Stack\test_stack.cpp" -o CMakeFiles\DataSructuresHW2.dir\DataStructures\Stack\test_stack.cpp.s
-
 CMakeFiles/DataSructuresHW2.dir/DataStructures/Tree/test_tree.cpp.obj: CMakeFiles/DataSructuresHW2.dir/flags.make
 CMakeFiles/DataSructuresHW2.dir/DataStructures/Tree/test_tree.cpp.obj: ../DataStructures/Tree/test_tree.cpp
 CMakeFiles/DataSructuresHW2.dir/DataStructures/Tree/test_tree.cpp.obj: CMakeFiles/DataSructuresHW2.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="C:\Users\nitai\Documents\Technion\Semester3\Data Structures\DataStructursHW2\build\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/DataSructuresHW2.dir/DataStructures/Tree/test_tree.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="C:\Users\nitai\Documents\Technion\Semester3\Data Structures\DataStructursHW2\build\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/DataSructuresHW2.dir/DataStructures/Tree/test_tree.cpp.obj"
 	C:\TDM-GCC-64\bin\x86_64-w64-mingw32-g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/DataSructuresHW2.dir/DataStructures/Tree/test_tree.cpp.obj -MF CMakeFiles\DataSructuresHW2.dir\DataStructures\Tree\test_tree.cpp.obj.d -o CMakeFiles\DataSructuresHW2.dir\DataStructures\Tree\test_tree.cpp.obj -c "C:\Users\nitai\Documents\Technion\Semester3\Data Structures\DataStructursHW2\DataStructures\Tree\test_tree.cpp"
 
 CMakeFiles/DataSructuresHW2.dir/DataStructures/Tree/test_tree.cpp.i: cmake_force
@@ -98,19 +84,17 @@ CMakeFiles/DataSructuresHW2.dir/DataStructures/Tree/test_tree.cpp.s: cmake_force
 
 # Object files for target DataSructuresHW2
 DataSructuresHW2_OBJECTS = \
-"CMakeFiles/DataSructuresHW2.dir/DataStructures/Stack/test_stack.cpp.obj" \
 "CMakeFiles/DataSructuresHW2.dir/DataStructures/Tree/test_tree.cpp.obj"
 
 # External object files for target DataSructuresHW2
 DataSructuresHW2_EXTERNAL_OBJECTS =
 
-DataSructuresHW2.exe: CMakeFiles/DataSructuresHW2.dir/DataStructures/Stack/test_stack.cpp.obj
 DataSructuresHW2.exe: CMakeFiles/DataSructuresHW2.dir/DataStructures/Tree/test_tree.cpp.obj
 DataSructuresHW2.exe: CMakeFiles/DataSructuresHW2.dir/build.make
 DataSructuresHW2.exe: CMakeFiles/DataSructuresHW2.dir/linklibs.rsp
 DataSructuresHW2.exe: CMakeFiles/DataSructuresHW2.dir/objects1.rsp
 DataSructuresHW2.exe: CMakeFiles/DataSructuresHW2.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="C:\Users\nitai\Documents\Technion\Semester3\Data Structures\DataStructursHW2\build\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable DataSructuresHW2.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="C:\Users\nitai\Documents\Technion\Semester3\Data Structures\DataStructursHW2\build\CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable DataSructuresHW2.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\DataSructuresHW2.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

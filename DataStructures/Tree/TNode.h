@@ -27,10 +27,12 @@ public:
     TNode<T> *getParent() const;
     TNode<T> *getLeft() const;
     TNode<T> *getRight() const;
-    const TNode<T> *getMin() const;
+    TNode<T> *getMin() ;
+    TNode<T> *getMax() ;
     void setParent(TNode<T> *node);
     void setLeft(TNode<T> *node);
     void setRight(TNode<T> *node);
+    void setKey(int key); //dangerous function! only used by Tree 
     void updateBalance();
     void updateHeight();
     int calculate_update_balance();
@@ -68,6 +70,12 @@ template <class T>
 const int TNode<T>::getKey() const
 {
     return key;
+}
+
+template <class T>
+void TNode<T>::setKey(int key)
+{
+    this->key = key;
 }
 
 template <class T>
@@ -113,13 +121,23 @@ TNode<T> *TNode<T>::getRight() const
 }
 
 template <class T>
-const TNode<T> *TNode<T>::getMin() const
+TNode<T> *TNode<T>::getMin() 
 {
     if (left == nullptr)
     {
         return this;
     }
     return left->getMin();
+}
+
+template <class T>
+TNode<T> *TNode<T>::getMax() 
+{
+    if (right == nullptr)
+    {
+        return this;
+    }
+    return right->getMax();
 }
 
 template <class T>
