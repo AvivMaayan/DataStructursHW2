@@ -257,6 +257,17 @@ TNode<T>* Tree<T>::RL(TNode<T>* not_balanced)
     return LL(not_balanced);
 }
 
+TNode<T>* Tree<T>::next_smaller(TNode<T>* vertice)
+{
+    assert(vertice->getParent() != nullptr); //vertice can't be the root when getting here
+    assert(vertice != left_most); //vertice can't be the biggest leaf when geting here
+    TNode<T>* parent = vertice->getParent();
+   if(parent->getRight() == vertice) { //vertice is bigger than his parent
+       return parent;
+    }
+    next_bigger(parent);
+}
+
 template <class T>
 TNode<T> *Tree<T>::rotate(TNode<T> *not_balanced)
 {
