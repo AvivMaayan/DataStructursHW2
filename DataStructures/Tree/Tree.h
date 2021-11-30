@@ -513,14 +513,14 @@ void Tree<T>::printTree(const std::string &prefix, const TNode<T> *node, bool is
     {
         std::cout << prefix;
 
-        std::cout << (isLeft ? "├──" : "└──");
+        std::cout << (isLeft ? "|--" : "'--");
 
         // print the value of the node
         std::cout << node->getKey() << "," << node->getData() << std::endl;
 
         // enter the next tree level - left and right branch
-        printTree(prefix + (isLeft ? "│   " : "    "), node->getLeft(), true);
-        printTree(prefix + (isLeft ? "│   " : "    "), node->getRight(), false);
+        printTree(prefix + (isLeft ? "|   " : "    "), node->getLeft(), true);
+        printTree(prefix + (isLeft ? "|   " : "    "), node->getRight(), false);
     }
 }
 
