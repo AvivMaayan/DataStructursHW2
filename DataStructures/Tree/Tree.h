@@ -38,6 +38,7 @@ public:
     const_iterator reverseBegin() const;
     const_iterator end() const;
     bool isEmpty() const;
+    int getSize() const;
     bool isExists(int key_to_find) const;
     T getData(int key_to_find) const;
     const_iterator search(const int key) const;
@@ -65,7 +66,7 @@ public:
         Tree<T>::const_iterator &operator--();
         bool operator==(const const_iterator &it) const;
         bool operator!=(const const_iterator &it) const;
-        T &getData(); //allowing the user to change the DATA but not the key! - only through using iterator
+        T &getData(); // allowing the user to change the DATA but not the key! - only through using iterator
         const int getKey() const;
     };
 };
@@ -140,7 +141,7 @@ bool Tree<T>::const_iterator ::operator!=(const const_iterator &it) const
 }
 
 template <class T>
-const T &Tree<T>::const_iterator ::getData() const
+T &Tree<T>::const_iterator ::getData()
 {
     if (this->element == nullptr)
     {
@@ -178,7 +179,7 @@ template <class T>
 Tree<T>::Tree() : root(nullptr), left_most(nullptr), right_most(nullptr), size(0) {}
 
 template <class T>
-Tree<T>::Tree(const Tree<T> &copy) :
+Tree<T>::Tree(const Tree<T> &copy)
 {
     for (Tree<T>::const_iterator it = copy.begin(); it != copy.end(); ++it)
     {
@@ -208,6 +209,12 @@ template <class T>
 bool Tree<T>::isEmpty() const
 {
     return root == nullptr;
+}
+
+template <class T>
+int Tree<T>::getSize() const
+{
+    return size;
 }
 
 template <class T>

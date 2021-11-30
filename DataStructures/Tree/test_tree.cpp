@@ -35,9 +35,9 @@ int main()
     tree.insert(4, 4);
     THEWALL();
     Tree<int>::const_iterator it = tree.search(8); //leaf search
-    cout << *it << endl;
+    cout << it.getData() << endl;
     it = tree.search(5); //root search
-    cout << *it << endl;
+    cout << it.getData() << endl;
     try
     {
         it = tree.search(1); //doesn't exist
@@ -88,28 +88,28 @@ int main()
     cout << "Testing iterator ++" << endl;
     for (auto it = tree.begin(); it != tree.end(); ++it)
     {
-        cout << *it << endl;
+        cout << it.getData() << endl;
     }
     cout << "Testing iterator --" << endl;
     for (auto it = tree.reverseBegin(); it != tree.end(); --it)
     {
-        cout << *it << endl;
+        cout << it.getData() << endl;
     }
     cout << "--------------" << endl;
     it = tree.search(7);
-    cout << *it << endl;
+    cout << it.getData() << endl;
     ++it;
-    cout << *it << endl;
+    cout << it.getData() << endl;
     ++it;
-    cout << *it << endl;
+    cout << it.getData() << endl;
     ++it;
-    cout << *it << endl;
+    cout << it.getData() << endl;
 
     try
     {
         it = tree.search(13);
         ++it; //nowhere to go
-        cout << *it << endl;
+        cout << it.getData() << endl;
     }
     catch (Exception e)
     {
@@ -122,12 +122,12 @@ int main()
     cout << "Testing iterator --" << endl;
     it = tree.reverseBegin();
     --it;
-    cout << *it << endl;
+    cout << it.getData() << endl;
     --it;
-    cout << *it << endl;
+    cout << it.getData() << endl;
     it = tree.search(3);
     --it;
-    cout << *it << endl;
+    cout << it.getData() << endl;
 
 
     TEST(1.8)

@@ -1,10 +1,15 @@
 DS that we used:
 Game:  
-•	Tree Groups (key: id group, value: group)
-•	MaxStack<id> max_level_players 
-•	Tree all_players(key: id, value: level)
+•	Groups[Tree] (key: group_id[int], value: group[Group])
+•	players[Tree] (key: player_id[int], value: player_id[int])
+•	max_level_players[Stack] (value: player_id[int])
 Group: (not deleted when is empty)
-•	Int group_id
-•	Tree players_of_group (key: level of player, value: Tree player (key: id of player, value: id of player) ) 
+•	group_id[int]
+•	Tree players (key: level[int], value: players[Tree] (key(=value): player_id[int])) 
 
 Player: is just an id 
+
+TDL:
+1.  
+2.  
+3.  

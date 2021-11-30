@@ -25,10 +25,10 @@ public:
     ~Group() = default;
     int getGroup() const;
     StatusType addPlayer(Id player, int level); 
-    StatusType removePlayer(Id player);
-    StatusType updateLevel(Id player, int increasement);
+    StatusType removePlayer(Id player, int level);
+    StatusType updateLevel(Id player, int level, int increasement);
     StatusType getHeighestLevel(Id* player); //get the lowest id of a player in the heighest level
-    StatusType getAllPlayersById(Id** players, int* numOfPlayers); //ids sorted low->high, levels high->low
+    StatusType getAllPlayersByLevel(Id** players_array, int* num_of_players); //ids sorted low->high, levels high->low
 };
 
 #endif //GROUP_H_
