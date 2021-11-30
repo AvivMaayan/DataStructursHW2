@@ -6,7 +6,7 @@
 #include <string>
 #include <cstring>
 
- enum Team {
+ enum StatusType {
         SUCCESS, ALLOCATION_ERROR, INVALID_INPUT, FAILURE
     };
 
