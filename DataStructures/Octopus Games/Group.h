@@ -21,7 +21,9 @@ public:
     Group(int id);
     Group(const Group &group) = delete;
     ~Group() = default;
+    int getGroup() const;
     
+
 };
 
 #endif //GROUP_H_

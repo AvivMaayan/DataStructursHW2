@@ -6,6 +6,10 @@
 #include <string>
 #include <cstring>
 
+ enum Team {
+        SUCCESS, ALLOCATION_ERROR, INVALID_INPUT, FAILURE
+    };
+
 class Exception : public std::exception
 {
     char *error_msg;
