@@ -6,10 +6,6 @@
 #include <string>
 #include <cstring>
 
- enum StatusType {
-        SUCCESS, ALLOCATION_ERROR, INVALID_INPUT, FAILURE
-    };
-
 class Exception : public std::exception
 {
     char *error_msg;

@@ -15,6 +15,7 @@ private:
     TNode<T> *root;
     TNode<T> *left_most;
     TNode<T> *right_most;
+    int size;
     TNode<T> *rotate(TNode<T> *not_balanced);
     TNode<T> *RR(TNode<T> *not_balanced);
     TNode<T> *LL(TNode<T> *not_balanced);
@@ -22,9 +23,6 @@ private:
     TNode<T> *LR(TNode<T> *not_balanced);
     TNode<T> *next_bigger(TNode<T> *vertice) const;
     TNode<T> *next_smaller(TNode<T> *vertice) const;
-    //need to implement?
-    //TNode<T> *get_rightest();
-    //TNode<T> *get_leftest();
     friend class const_iterator;
     TNode<T> *internalSearch(TNode<T> *node, int key_to_find) const;
     TNode<T> *internalInsert(TNode<T> *node, int key_to_insert, const T data);
@@ -40,11 +38,13 @@ public:
     const_iterator reverseBegin() const;
     const_iterator end() const;
     bool isEmpty() const;
+    bool isExists(int key_to_find) const;
+    T getData(int key_to_find) const;
     const_iterator search(const int key) const;
     void insert(int key, const T data);
     void remove(int key);                            // remove a vertice by its key
     void removeByIt(const const_iterator &iterator); // remove a vertice pointed by an iterator
-    //to be deleted at the end:
+    // to be deleted at the end:
     void printTree() const;
     void printTree(const std::string &prefix, const TNode<T> *node, bool isLeft) const;
 
@@ -57,25 +57,24 @@ public:
         friend class Tree<T>;
         // void setElement(TNode<T> *node);
     public:
-        const_iterator(TNode<T> *node, const Tree<T> &tree) : element(node), tree(tree) {};
+        const_iterator(TNode<T> *node, const Tree<T> &tree) : element(node), tree(tree){};
         const_iterator(const const_iterator &copy) = default;
         ~const_iterator() = default;
         Tree<T>::const_iterator &operator=(const const_iterator &it);
-        // Aviv:
         Tree<T>::const_iterator &operator++();
         Tree<T>::const_iterator &operator--();
         bool operator==(const const_iterator &it) const;
         bool operator!=(const const_iterator &it) const;
-        const T &operator*() const;
+        T &getData(); //allowing the user to change the DATA but not the key! - only through using iterator
+        const int getKey() const;
     };
 };
 ////////////////////////IMPLEMENTATION///////////////////////
 
 //////// const_iterator ////////
 
-
 /**template <class T>
-Tree<T>::const_iterator ::const_iterator(const const_iterator &copy) 
+Tree<T>::const_iterator ::const_iterator(const const_iterator &copy)
 {
     this->element = copy.element;
     this->tree = copy.tree;
@@ -91,11 +90,12 @@ typename Tree<T>::const_iterator &Tree<T>::const_iterator ::operator=(const cons
 template <class T>
 typename Tree<T>::const_iterator &Tree<T>::const_iterator ::operator++()
 {
-    if(*this == tree.reverseBegin()) {
+    if (*this == tree.reverseBegin())
+    {
         this->element = nullptr;
     }
     else if (this->element->getRight() != nullptr)
-    { //the next bigger one is in the right sub-tree
+    { // the next bigger one is in the right sub-tree
         this->element = this->element->getRight()->getMin();
     }
     else
@@ -108,11 +108,12 @@ typename Tree<T>::const_iterator &Tree<T>::const_iterator ::operator++()
 template <class T>
 typename Tree<T>::const_iterator &Tree<T>::const_iterator ::operator--()
 {
-     if(*this == tree.begin()) {
+    if (*this == tree.begin())
+    {
         this->element = nullptr;
     }
     else if (this->element->getLeft() != nullptr)
-    { //the next smaller one is the left son
+    { // the next smaller one is the left son
         this->element = this->element->getLeft()->getMax();
     }
     else
@@ -139,7 +140,7 @@ bool Tree<T>::const_iterator ::operator!=(const const_iterator &it) const
 }
 
 template <class T>
-const T &Tree<T>::const_iterator ::operator*() const
+const T &Tree<T>::const_iterator ::getData() const
 {
     if (this->element == nullptr)
     {
@@ -147,6 +148,17 @@ const T &Tree<T>::const_iterator ::operator*() const
     }
 
     return this->element->getData();
+}
+
+template <class T>
+const int Tree<T>::const_iterator ::getKey() const
+{
+    if (this->element == nullptr)
+    {
+        throw Invalid_Input();
+    }
+
+    return this->element->getKey();
 }
 
 /**template <class T>
@@ -163,7 +175,16 @@ TNode<T> *Tree<T>::const_iterator ::getNode() const
 
 //////// Tree ////////
 template <class T>
-Tree<T>::Tree() : root(), left_most(), right_most() {}
+Tree<T>::Tree() : root(nullptr), left_most(nullptr), right_most(nullptr), size(0) {}
+
+template <class T>
+Tree<T>::Tree(const Tree<T> &copy) :
+{
+    for (Tree<T>::const_iterator it = copy.begin(); it != copy.end(); ++it)
+    {
+        insert(it.getKey(), *it);
+    }
+}
 
 template <class T>
 void Tree<T>::internalClear(TNode<T> *root)
@@ -192,11 +213,11 @@ bool Tree<T>::isEmpty() const
 template <class T>
 TNode<T> *Tree<T>::LL(TNode<T> *not_balanced)
 {
-    //helpful definitions:
+    // helpful definitions:
     TNode<T> *parent = not_balanced->getParent();
     TNode<T> *A = not_balanced->getLeft();
     TNode<T> *temp = A->getRight();
-    //rotation:
+    // rotation:
     not_balanced->setLeft(temp);
     if (temp != nullptr)
     {
@@ -204,21 +225,21 @@ TNode<T> *Tree<T>::LL(TNode<T> *not_balanced)
     }
     A->setRight(not_balanced);
     not_balanced->setParent(A);
-    //resetting the original parent of not_balanced
+    // resetting the original parent of not_balanced
     if (parent != nullptr)
     {
         if (parent->getLeft() == not_balanced)
-        { //not_balanced is the left son
+        { // not_balanced is the left son
             parent->setLeft(A);
         }
         else
-        { //not_balanced is the right son
+        { // not_balanced is the right son
             parent->setRight(A);
         }
     }
 
     A->setParent(parent);
-    //changing to new heights:
+    // changing to new heights:
     /**if(A_orig_balance == 0) {
         not_balanced->setHeight(not_balanced->getHeight()-1); //lowering not_balanced by 1
         A->setHeight(A->getHeight()++);
@@ -237,13 +258,13 @@ TNode<T> *Tree<T>::LL(TNode<T> *not_balanced)
 
 template <class T>
 TNode<T> *Tree<T>::
-RR(TNode<T> *not_balanced)
+    RR(TNode<T> *not_balanced)
 {
-    //helpful definitions:
+    // helpful definitions:
     TNode<T> *parent = not_balanced->getParent();
     TNode<T> *A = not_balanced->getRight();
     TNode<T> *temp = A->getLeft();
-    //rotation:
+    // rotation:
     not_balanced->setRight(temp);
     if (temp != nullptr)
     {
@@ -251,20 +272,20 @@ RR(TNode<T> *not_balanced)
     }
     A->setLeft(not_balanced);
     not_balanced->setParent(A);
-    //resetting the original parent of not_balanced
+    // resetting the original parent of not_balanced
     if (parent != nullptr)
     {
         if (parent->getLeft() == not_balanced)
-        { //not_balanced is the left son
+        { // not_balanced is the left son
             parent->setLeft(A);
         }
         else
-        { //not_balanced is the right son
+        { // not_balanced is the right son
             parent->setRight(A);
         }
     }
     A->setParent(parent);
-    //changing to new heights:
+    // changing to new heights:
     /**if(A_orig_balance == 0) {
         not_balanced->height++;
         A->height++;
@@ -300,11 +321,11 @@ TNode<T> *Tree<T>::RL(TNode<T> *not_balanced)
 template <class T>
 TNode<T> *Tree<T>::next_smaller(TNode<T> *vertice) const
 {
-    assert(vertice->getParent() != nullptr); //vertice can't be the root when getting here
-    assert(vertice != left_most);            //vertice can't be the biggest leaf when geting here
+    assert(vertice->getParent() != nullptr); // vertice can't be the root when getting here
+    assert(vertice != left_most);            // vertice can't be the biggest leaf when geting here
     TNode<T> *parent = vertice->getParent();
     if (parent->getRight() == vertice)
-    { //vertice is bigger than his parent
+    { // vertice is bigger than his parent
         return parent;
     }
     return next_smaller(parent);
@@ -313,11 +334,11 @@ TNode<T> *Tree<T>::next_smaller(TNode<T> *vertice) const
 template <class T>
 TNode<T> *Tree<T>::next_bigger(TNode<T> *vertice) const
 {
-    //assert(vertice->getParent() != nullptr); //vertice can't be the root when getting here
-    //assert(vertice != left_most);            //vertice can't be the biggest leaf when geting here
+    // assert(vertice->getParent() != nullptr); //vertice can't be the root when getting here
+    // assert(vertice != left_most);            //vertice can't be the biggest leaf when geting here
     TNode<T> *parent = vertice->getParent();
     if (parent->getLeft() == vertice)
-    { //vertice is smaller than his parent
+    { // vertice is smaller than his parent
         return parent;
     }
     return next_bigger(parent);
@@ -370,6 +391,18 @@ TNode<T> *Tree<T>::internalSearch(TNode<T> *node, int key_to_find) const
 }
 
 template <class T>
+bool Tree<T>::isExists(int key_to_find) const
+{
+    return internalSearch(root, key_to_find) != nullptr;
+}
+
+template <class T>
+T Tree<T>::getData(int key_to_find) const
+{
+    return internalSearch(root, key_to_find)->getData();
+}
+
+template <class T>
 typename Tree<T>::const_iterator Tree<T>::search(const int key) const
 {
     return Tree<T>::const_iterator(internalSearch(root, key), *this);
@@ -381,6 +414,7 @@ TNode<T> *Tree<T>::internalInsert(TNode<T> *node, int key_to_insert, const T dat
     if (node == nullptr)
     {
         return new TNode<T>(key_to_insert, data);
+        size++;
     }
     else
     {
@@ -410,8 +444,8 @@ template <class T>
 void Tree<T>::insert(int key, const T data)
 {
     root = internalInsert(root, key, data);
-    left_most = root->getMin();   
-    right_most = root->getMax();   
+    left_most = root->getMin();
+    right_most = root->getMax();
 }
 
 template <class T>
@@ -422,7 +456,7 @@ TNode<T> *Tree<T>::internalRemove(TNode<T> *node, int key_to_remove)
     int key = node->getKey();
     if (key_to_remove == key)
     {
-        if (node->getRight() != nullptr && node->getLeft() != nullptr) //node has 2 sons
+        if (node->getRight() != nullptr && node->getLeft() != nullptr) // node has 2 sons
         {
             const TNode<T> *next_node = node->getRight()->getMin();
             node->setKey(next_node->getKey());
@@ -438,7 +472,7 @@ TNode<T> *Tree<T>::internalRemove(TNode<T> *node, int key_to_remove)
                 node = node->getLeft();
             }
             else
-            //if (node->getLeft() == nullptr)
+            // if (node->getLeft() == nullptr)
             {
                 node = node->getRight();
             }
@@ -447,6 +481,7 @@ TNode<T> *Tree<T>::internalRemove(TNode<T> *node, int key_to_remove)
                 node->setParent(tmpNode->getParent());
             }
             delete tmpNode;
+            size--;
         }
     }
     else if (key_to_remove > key)
@@ -474,12 +509,14 @@ template <class T>
 void Tree<T>::remove(int key)
 {
     root = internalRemove(root, key);
+    left_most = root->getMin();
+    right_most = root->getMax();
 }
 
 template <class T>
 void Tree<T>::removeByIt(const Tree<T>::const_iterator &iterator)
 {
-    //Leaving this out for now
+    // Leaving this out for now
 }
 
 template <class T>
