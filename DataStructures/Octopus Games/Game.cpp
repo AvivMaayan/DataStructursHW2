@@ -7,9 +7,9 @@ using std::string;
 
 Game::Game() 
 {
-    groups = Tree<Group>();
-    levels = Tree<Level>();
-    players = Tree<Player_ptr>();
+    groups = Tree<Group_ptr>();
+    levels = Group();
+    players = Level();
 }
 
 Status Game::AddGroup(int GroupID)
@@ -36,7 +36,7 @@ Status Game::AddGroup(int GroupID)
 * @e log(n)
  * @param player 
  * @return int level or -1
- */
+ *
 int Game::getLevel(Id PlayerID) 
 {
     if(!players.isExist(PlayerID))
@@ -44,30 +44,24 @@ int Game::getLevel(Id PlayerID)
         return DOES_NOT_EXIST;
     }
     return players.getData(PlayerID)->getLevel();
-}
+}*/
 
 Status Game::AddPlayer(int PlayerID, int GroupID, int Level)
 {
-    if(players.isExist(PlayerID) || !groups.isExist(GroupID)) //player exists already or group doesn't 
+    if(players.isPlayerExist(PlayerID) || !groups.isExist(GroupID)) //player exists already or group doesn't 
     {
         return FAILURE;
     }
     try
     {
-        Group *group_ptr = &groups.getData(GroupID);
+        Group_ptr group_ptr = groups.getData(GroupID);
         Player_ptr player = make_shared<Player>(Level, group_ptr);
 
         //Adding to players tree
-        players.insert(PlayerID, player);
+        players.addPlayer(PlayerID, player);
 
         //Adding to levels tree
-        Tree<Player_ptr> curr_level;
-        if(!levels.isExist(Level))//this player is the only one in this Level 
-        {
-            curr_level = levels.insert(Level);
-        }
-        //Level exists in levels tree
-        curr_level.insert(PlayerID);
+        levels.addPlayer(PlayerID, player);
         
         //Adding to groups tree
         group_ptr->addPlayer(PlayerID, player);
@@ -82,24 +76,19 @@ Status Game::AddPlayer(int PlayerID, int GroupID, int Level)
 
 Status Game::RemovePlayer(int PlayerID) 
 {
-    if(!players.isExist(PlayerID)) //player does not exist 
+    if(!players.isPlayerExist(PlayerID)) //player does not exist 
     {
         return FAILURE;
     }
-    Player_ptr player = players.getData(PlayerID);
+
+    Player_ptr player = players.getPlayerPtr(PlayerID);
     Group *group_ptr = player->getGroupPtr();
-    int level = player->getLevel();
 
     //Removing from players tree
-    players.remove(PlayerID);
+    players.removePlayer(PlayerID);
 
     //Removing from levels tree
-    levels.getData(level).remove(PlayerID);
-    //checking if the level is now empty
-    if (levels.getData(level).isEmpty())
-    {
-        levels.remove(level);
-    }
+    levels.removePlayer(PlayerID, player);
         
     //Removing from groups tree
     group_ptr->removePlayer(PlayerID, player); 
@@ -114,44 +103,71 @@ Status Game::ReplaceGroup(int GroupID, int ReplacementID)
 
 Status Game::IncreaseLevel(int PlayerID, int LevelIncrease)
 {
-    if(!players.isExist(PlayerID)) //player does not exist 
+    if(!players.isPlayerExist(PlayerID)) //player does not exist 
     {
         return FAILURE;
     }
-    Player_ptr player = players.getData(PlayerID);
+
+    Player_ptr player = players.getPlayerPtr(PlayerID);
     Group *group_ptr = player->getGroupPtr();
     int level = player->getLevel();
 
     //removing the player from 2 trees
     group_ptr->removePlayer(PlayerID, player);
-    levels.getData(level).remove(PlayerID);
+    levels.removePlayer(PlayerID, player);
 
     //updating player's info
     player->setLevel(level + LevelIncrease);
 
     //re-inserting the player
     group_ptr->addPlayer(PlayerID, player);
-
-    if (!levels.isExist(level + LevelIncrease)) // this level doesn't exist
-    {
-        levels.insert(level + LevelIncrease);
-    }
-    levels.getData(level + LevelIncrease).insert(PlayerID);
+    levels.addPlayer(PlayerID, player);
 }
 
 Status Game::GetHighestLevel(int GroupID, int *PlayerID)
 {
-
+    if (GroupID < 0)
+    {
+        return levels.getHighestLevel(PlayerID);
+    }
+    if (!groups.isExist(GroupID))
+    {
+        return FAILURE;
+    }
+    Group_ptr group_ptr = groups.getData(GroupID);
+    return group_ptr->getHighestLevel(PlayerID);
 }
 
 Status Game::GetAllPlayersByLevel(int GroupID, int **Players, int *numOfPlayers)
 {
-
+    if (GroupID < 0)
+    {
+        return levels.getAllPlayersByLevel(Players, numOfPlayers);
+    }
+    if (!groups.isExist(GroupID))
+    {
+        return FAILURE;
+    }
+    Group_ptr group_ptr = groups.getData(GroupID);
+    return group_ptr->getAllPlayersByLevel(Players, numOfPlayers);
 }
 
-Status GetGroupsHighestLevel(int numOfGroups, int **Players)
+Status Game::GetGroupsHighestLevel(int numOfGroups, int **Players)
 {
-
+    int i=0;
+    for (Tree<Group_ptr>::const_iterator group_iterator = groups.begin() ; group_iterator != groups.end() && i< numOfGroups; ++group_iterator)
+    {
+        if(!group_iterator.getData()->isEmpty())
+        {
+            group_iterator.getData()->getHighestLevel(Players[i]);
+            i++;
+        }
+    }
+    if(i < numOfGroups) //more space in the array then num of not empty groups
+    {
+        return FAILURE;
+    }
+    return SUCCESS; 
 }
 
 

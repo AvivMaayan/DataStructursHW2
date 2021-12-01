@@ -3,41 +3,23 @@
 
 #include <iostream>
 
-#include "../Tree/Tree.h"
-#include <memory>
-
-using std::cout;
-using std::endl;
-using std::string;
-using std::shared_ptr;
-using std::make_shared;
-
-typedef enum {
-    SUCCESS = 0,
-    FAILURE = -1,
-    ALLOCATION_ERROR = -2,
-    INVALID_INPUT = -3
-} Status;
-
+#include "Level.h"
 class Player;
-
-typedef int Id;
-typedef shared_ptr<Player> Player_ptr;
-typedef Tree<Player_ptr> Level;
+typedef shared_ptr<Level> Level_ptr;
 
 class Group
 {
 private:
-    //int group_id;
-    Tree<Level> players; //players is a tree: key = level of players, data = pointer Players at this level from the group
+    Tree<Level_ptr> levels; //levels is a tree: key = level of players, data = pointer Players at this level from the group
 
 public:
-    //Group(Id id);
-    Group() : players(){}
+    Group() : levels(){}
     Group(const Group &group) = delete;
     ~Group() = default;
-    //int getGroup() const;
-    Status addPlayer(Id id, Player_ptr player); 
+    bool isLevelExist(int level);
+    bool isEmpty();
+    Level_ptr getLevelPtr(int level);
+    Status addPlayer(Id id, Player_ptr player);  
     Status removePlayer(Id id, Player_ptr player);
     Status updateLevel(Id id, Player_ptr player, int increasement);
     Status getHighestLevel(Id* player); //get the lowest id of a player in the heighest level

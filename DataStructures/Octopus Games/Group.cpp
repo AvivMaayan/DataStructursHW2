@@ -1,15 +1,6 @@
 #include "Group.h"
 #include "Player.h"
 
-//Group::Group(Id id) : group_id(id), players() {}
-
-/*
-int Group::getGroup() const
-{
-    return group_id;
-}
-*/
-
 /**
  * @e o(log(n))
  * @param .
@@ -22,13 +13,13 @@ int Group::getGroup() const
 Status Group::addPlayer(Id id, Player_ptr player)
 {
     int level = player->getLevel();
-    if (!players.isExist(level)) // this level doesn't exist
+    if (!levels.isExist(level)) // this level doesn't exist
     {
-        players.insert(level);
+        levels.insert(level);
     }
     // level_tree defintely exists by now
-    Level players_tree = players.getData(level);
-    players_tree.insert(id, player);
+    Level_ptr players_tree = levels.getData(level);
+    players_tree->addPlayer(id, player);
     return SUCCESS;
 }
 
@@ -43,14 +34,26 @@ Status Group::addPlayer(Id id, Player_ptr player)
 Status Group::removePlayer(Id id, Player_ptr player)
 {
     int level = player->getLevel();
-    Level players_tree = players.getData(level);
-    players_tree.remove(id);
+    Level_ptr players_tree = levels.getData(level);
+    players_tree->removePlayer(id);
     //checking if the level is now empty
-    if (players_tree.isEmpty())
+    if (players_tree->isEmpty())
     {
-        players.remove(level);
+        levels.remove(level);
     }
     return SUCCESS;
+}
+
+
+bool Group::isLevelExist(int level) 
+{
+    return levels.isExist(level);
+}
+
+
+Level_ptr Group::getLevelPtr(int level)
+{
+    return levels.getData(level);
 }
 
 /**
@@ -80,14 +83,19 @@ Status Group::updateLevel(Id id, Player_ptr player, int increasement)
  * */
 Status Group::getHighestLevel(Id *player)
 {
-    if (players.isEmpty()) //player is not in group
+    if (levels.isEmpty()) //there are no players in the group
     {
         *player = -1; //trash
         return SUCCESS;
     }
-    Level highest = players.reverseBegin().getData(); //highest level
-    *player = highest.begin().getKey();//lowest player
+    Level_ptr highest = levels.reverseBegin().getData(); //highest level
+    *player = highest->players.begin().getKey(); //lowest player
     return SUCCESS;
+}
+
+bool Group::isEmpty()
+{
+    return levels.isEmpty();
 }
 
 /**
@@ -101,22 +109,17 @@ Status Group::getHighestLevel(Id *player)
  * */
 Status Group::getAllPlayersByLevel(Id **players_array, int *num_of_players)
 {
-    *num_of_players = players.getSize();
+    *num_of_players = levels.getSize();
     if (*num_of_players==0)
     {
         players_array=NULL;
         return SUCCESS;
     }
-    *players_array = (Id*)malloc(sizeof(Id) * *num_of_players); 
-    if (!*players_array)
-    {
-        return ALLOCATION_ERROR;
-    }
     int i = 0;
-    for (Tree<Level>::const_iterator levels_it = players.reverseBegin(); levels_it != players.end(); --levels_it)
+    for (Tree<Level_ptr>::const_iterator levels_it = levels.reverseBegin(); levels_it != levels.end(); --levels_it)
     {
-        Level level_tree = levels_it.getData();
-        for (Level::const_iterator players_it = level_tree.begin(); players_it != level_tree.end(); ++players_it)
+        Tree<Player_ptr> level = levels_it.getData()->players;
+        for (Tree<Player_ptr>::const_iterator players_it = level.begin(); players_it != level.end(); ++players_it)
         {
             *players_array[i] = players_it.getKey();
         }

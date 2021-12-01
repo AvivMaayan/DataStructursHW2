@@ -13,12 +13,21 @@ using std::cout;
 using std::endl;
 using std::string;
 
+/**
+ * Level - is a tree of Player pointers. (usually, they are all in the same level) 
+ * Group - is a tree of Levels, in which all of a Level's players are in the same level in the game.
+ * 
+ */
+
+typedef shared_ptr<Group> Group_ptr;
+
 class Game
 {
 private:
-    Tree<Group> groups;
-    Tree<Level> levels; // key-level (int), data-Level(tree of players (id) in this level)
-    Tree<Player_ptr> players; //key-Id (int), data-level of the player(int)
+    Tree<Group_ptr> groups;
+    Group levels; //all of the players form a group = key-level (int), data-Level(tree of players (id) in this level)
+    Level players; //all of the players are "in" an abstract level = key-Id (int), data-level of the player(int)
+    
     Group getGroup(int group_id); 
     int getLevel(Id PlayerID);
     Id GameHighestLevelPlayer(); //returns player on the highest level. if there are a few, returns the lowest id
