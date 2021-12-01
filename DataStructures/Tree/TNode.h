@@ -15,7 +15,7 @@ private:
 
 public:
     TNode();
-    explicit TNode(int key, T data, TNode<T> *parent = nullptr);
+    explicit TNode(int key, const T& data, TNode<T> *parent = nullptr);
     TNode(const TNode<T> &copy) = delete;
     ~TNode() = default;
     T &getData();
@@ -40,7 +40,7 @@ public:
 };
 
 template <class T>
-TNode<T>::TNode(int key, T data, TNode<T> *parent)
+TNode<T>::TNode(int key, const T& data, TNode<T> *parent)
     : height(0), balance(0), key(key), left(nullptr), right(nullptr), data(data), parent(parent)
 {
 }

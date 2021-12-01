@@ -24,8 +24,6 @@ private:
     Id GameHighestLevelPlayer(); //returns player on the highest level. if there are a few, returns the lowest id
     Status GameAddNewPlayer(Id PlayerID, int level); //adding a *new* player to the players tree. assuming that the player really is new
     Status GameRemovePlayer(Id PlayerID); //removing a player from the players tree
-
-    void treeToArray(const Tree<T>)
 public:
     Game();
     ~Game() = default;
