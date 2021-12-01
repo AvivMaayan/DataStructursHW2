@@ -17,7 +17,7 @@ int Group::getGroup() const
 // REMEMER TO CHECK AND ADD IF NEDEED
 // BAD ALLOC CHECK
  * */
-StatusType Group::addPlayer(Id player, int level)
+Status Group::addPlayer(Id player, int level)
 {
     if (!players.isExist(level)) // this level doesn't exist
     {
@@ -37,7 +37,7 @@ StatusType Group::addPlayer(Id player, int level)
  *  assuming input is valid, player exists in the game -> we know his level (from the Stack)
 // going over all of the groups in game and calling this func
  * */
-StatusType Group::removePlayer(Id player, int level)
+Status Group::removePlayer(Id player, int level)
 {
     Level players_tree = players.getData(level);
     players_tree.remove(player);
@@ -51,7 +51,7 @@ StatusType Group::removePlayer(Id player, int level)
  * assuming valid input, player exists -> we know his level (from the Stack)
  * WHAT ABOUT BAD ALLOC CHECK?
  * */
-StatusType Group::updateLevel(Id player, int level, int increasement)
+Status Group::updateLevel(Id player, int level, int increasement)
 {
     Level players_tree = players.getData(level);
     players_tree.remove(player);
@@ -64,7 +64,7 @@ StatusType Group::updateLevel(Id player, int level, int increasement)
  * ,has the *lowest* id from those at the same level
  * @return SUCCESS *only* and id of player (as param) if was found, -1 otherwise
  * */
-StatusType Group::getHighestLevel(Id *player)
+Status Group::getHighestLevel(Id *player)
 {
     if (players.isEmpty()) //player is not in group
     {
@@ -85,7 +85,7 @@ StatusType Group::getHighestLevel(Id *player)
  * within each level - lowest to highest id
  * @return SUCCESS if null array or just an array, ALLOCATION_ERROR otherwise
  * */
-StatusType Group::getAllPlayersByLevel(Id **players_array, int *num_of_players)
+Status Group::getAllPlayersByLevel(Id **players_array, int *num_of_players)
 {
     *num_of_players = players.getSize();
     if (*num_of_players==0)
