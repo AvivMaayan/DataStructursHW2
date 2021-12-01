@@ -1,3 +1,5 @@
+#ifndef GAME_H_
+#define GAME_H_
 #include <iostream>
 
 #include <cassert>
@@ -18,11 +20,17 @@ class Game
 {
 private:
     Tree<Group> groups;
-    Tree<int> players; // key-id, data-level (int)
-    Stack<int> max_level_players; //not a good idea :(
-    Id max_player; //player in the highest level
-
-
+    Tree<Level> players; // key-level (int), data-Level(tree of players (id) in this level)
 public:
-    int getLevel(Id player) {return (players.isExist(player)) ? players.getData(player) : DOES_NOT_EXIST;}; 
+    Game();
+    ~Game();
+    Group getGroup(int group_id); 
+    //int getLevel(Id player) {return (players.isExist(player)) ? players.getData(player) : DOES_NOT_EXIST;};
+    Id GameHighestLevelPlayer(); //returns player on the highest level. if there are a few, returns the lowest id
+    StatusType GameAddNewPlayer(Id player, int level); //adding a *new* player to the players tree. assuming that the player really is new
+    StatusType GameRemovePlayer(Id player); //removing a player from the players tree
+    
+
+    
 };
+#endif 

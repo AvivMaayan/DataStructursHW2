@@ -18,7 +18,8 @@ public:
     explicit TNode(int key, T data, TNode<T> *parent = nullptr);
     TNode(const TNode<T> &copy) = delete;
     ~TNode() = default;
-    const T &getData() const;
+    T &getData();
+    const T &getDataConst() const;
     void setData(const T& new_data);
     const int getKey() const;
     const int getHeight() const;
@@ -61,7 +62,13 @@ void TNode<T>::updateHeight()
 }
 
 template <class T>
-const T &TNode<T>::getData() const
+T &TNode<T>::getData() 
+{
+    return data;
+}
+
+template <class T>
+const T &TNode<T>::getDataConst() const
 {
     return data;
 }

@@ -40,7 +40,7 @@ public:
     bool isEmpty() const;
     int getSize() const;
     bool isExist(int key_to_find) const;
-    T getData(int key_to_find) const;
+    T& getData(int key_to_find) const;
     const_iterator search(const int key) const;
     void insert(int key, const T data);
     void remove(int key);                            // remove a vertice by its key
@@ -66,7 +66,7 @@ public:
     ~const_iterator() = default;
     Tree<T>::const_iterator &operator=(const const_iterator &it)= default;
     
-    const T &getData() const; // allowing the user to change the DATA but not the key! - only through using iterator
+    T &getData() const; // allowing the user to change the DATA but not the key! - only through using iterator
     const int getKey() const;
     
     bool operator==(const const_iterator &it) const;
@@ -149,7 +149,7 @@ bool Tree<T>::const_iterator ::operator!=(const const_iterator &it) const
 }
 
 template <class T>
-const T &Tree<T>::const_iterator ::getData() const
+T &Tree<T>::const_iterator ::getData() const
 {
     if (this->element == nullptr)
     {
@@ -413,9 +413,9 @@ bool Tree<T>::isExist(int key_to_find) const
 }
 
 template <class T>
-T Tree<T>::getData(int key_to_find) const
+T& Tree<T>::getData(int key_to_find) const
 {
-    return internalSearch(root, key_to_find)->getData();
+    return search(key_to_find).getData();
 }
 
 template <class T>
@@ -476,7 +476,7 @@ TNode<T> *Tree<T>::internalRemove(TNode<T> *node, int key_to_remove)
         {
             const TNode<T> *next_node = node->getRight()->getMin();
             node->setKey(next_node->getKey());
-            node->setData(next_node->getData());
+            node->setData(next_node->getDataConst());
             node->setRight(internalRemove(node->getRight(), next_node->getKey()));
             // rotate?
         }
@@ -569,7 +569,7 @@ void Tree<T>::printTree(const std::string &prefix, const TNode<T> *node, bool is
         std::cout << (isLeft ? "|--" : "'--");
 
         // print the value of the node
-        std::cout << node->getKey() << "," << node->getData() << std::endl;
+        std::cout << node->getKey() << "," << node->getDataConst() << std::endl;
 
         // enter the next tree level - left and right branch
         printTree(prefix + (isLeft ? "|   " : "    "), node->getLeft(), true);

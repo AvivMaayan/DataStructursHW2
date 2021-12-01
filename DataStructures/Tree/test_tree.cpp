@@ -58,6 +58,8 @@ int main()
     THEWALL()
     tree.insert(4, 4); //already there
     THEWALL()
+    tree.getData(4) =5;
+    THEWALL()
 
     TEST(1.3)
     cout << "Testing remove" << endl;
