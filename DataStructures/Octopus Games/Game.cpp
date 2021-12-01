@@ -7,23 +7,49 @@ using std::string;
 
 Game::Game() 
 {
-
+    groups = Tree<Group>();
+    players = Tree<Level>();
 }
 
-Game::~Game()
+Status Game::AddGroup(int GroupID)
+{
+    
+}
+
+Status Game::AddPlayer(int PlayerID, int GroupID, int Level)
 {
 
 }
 
-void *Init()
+Status Game::RemovePlayer(int PlayerID) 
 {
-    return new Game();
+
 }
 
-StatusType AddGroup(void *DS, int GroupID)
+Status Game::ReplaceGroup(int GroupID, int ReplacementID)
 {
-    if(GroupID <= 0 || !DS) {
-        return INVALID_INPUT;
-    }
-    if()
+
 }
+
+Status Game::IncreaseLevel(int PlayerID, int LevelIncrease)
+{
+
+}
+
+Status Game::GetHighestLevel(int GroupID, int *PlayerID)
+{
+
+}
+
+Status Game::GetAllPlayersByLevel(int GroupID, int **Players, int *numOfPlayers)
+{
+
+}
+
+Status GetGroupsHighestLevel(int numOfGroups, int **Players)
+{
+
+}
+
+
+

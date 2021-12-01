@@ -24,9 +24,16 @@ Group getGroup(int group_id);
     Status GameRemovePlayer(Id player); //removing a player from the players tree  
 public:
     Game();
-    ~Game();
+    ~Game() = default;
     
     //functions from Library1:
     Status AddGroup(int GroupID);
+    Status AddPlayer(int PlayerID, int GroupID, int Level);
+    Status RemovePlayer(int PlayerID);
+    Status ReplaceGroup(int GroupID, int ReplacementID);
+    Status IncreaseLevel(int PlayerID, int LevelIncrease);
+    Status GetHighestLevel(int GroupID, int *PlayerID);
+    Status GetAllPlayersByLevel(int GroupID, int **Players, int *numOfPlayers);
+    Status GetGroupsHighestLevel(int numOfGroups, int **Players);
 };
 #endif 
