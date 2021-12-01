@@ -8,7 +8,7 @@
 #include "Group.h"
 #include "library.h"
 
-#define DOES_NOT_EXISTS -1
+#define DOES_NOT_EXIST -1
 
 using std::cout;
 using std::endl;
@@ -18,8 +18,11 @@ class Game
 {
 private:
     Tree<Group> groups;
-    Tree<int> players; // key-id, T-level
-    Stack<int> max_level_players;
+    Tree<int> players; // key-id, data-level (int)
+    Stack<int> max_level_players; //not a good idea :(
+    Id max_player; //player in the highest level
+
+
 public:
-    int getLevel(Id player) {return (players.isExists(player)) ? players.getData(player) : DOES_NOT_EXISTS;}; 
+    int getLevel(Id player) {return (players.isExist(player)) ? players.getData(player) : DOES_NOT_EXIST;}; 
 };

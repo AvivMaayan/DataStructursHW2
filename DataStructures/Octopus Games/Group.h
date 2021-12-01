@@ -27,7 +27,7 @@ public:
     StatusType addPlayer(Id player, int level); 
     StatusType removePlayer(Id player, int level);
     StatusType updateLevel(Id player, int level, int increasement);
-    StatusType getHeighestLevel(Id* player); //get the lowest id of a player in the heighest level
+    StatusType getHighestLevel(Id* player); //get the lowest id of a player in the heighest level
     StatusType getAllPlayersByLevel(Id** players_array, int* num_of_players); //ids sorted low->high, levels high->low
 };
 

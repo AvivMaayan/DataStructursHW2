@@ -39,7 +39,7 @@ public:
     const_iterator end() const;
     bool isEmpty() const;
     int getSize() const;
-    bool isExists(int key_to_find) const;
+    bool isExist(int key_to_find) const;
     T getData(int key_to_find) const;
     const_iterator search(const int key) const;
     void insert(int key, const T data);
@@ -91,15 +91,17 @@ typename Tree<T>::const_iterator &Tree<T>::const_iterator ::operator=(const cons
 template <class T>
 typename Tree<T>::const_iterator &Tree<T>::const_iterator ::operator++()
 {
-    if (*this == tree.reverseBegin())
+    if (*this == tree.reverseBegin()) //no where to continue, biggest node
     {
-        this->element = nullptr;
+        this->element = nullptr; //now it is end()
     }
     else if (this->element->getRight() != nullptr)
-    { // the next bigger one is in the right sub-tree
+    { // the next bigger is in the right sub-tree
         this->element = this->element->getRight()->getMin();
     }
-    else
+    //need to check here if root or not - if root with no right son is sent 
+    //to next_bigger, we get seg fault
+    else //next big one is somewhere above
     {
         this->element = tree.next_bigger(this->element);
     }
@@ -117,7 +119,7 @@ typename Tree<T>::const_iterator &Tree<T>::const_iterator ::operator--()
     { // the next smaller one is the left son
         this->element = this->element->getLeft()->getMax();
     }
-    else
+    else //next small one is somewhere above
     {
         this->element = tree.next_smaller(this->element);
     }
@@ -183,7 +185,7 @@ Tree<T>::Tree(const Tree<T> &copy)
 {
     for (Tree<T>::const_iterator it = copy.begin(); it != copy.end(); ++it)
     {
-        insert(it.getKey(), *it);
+        insert(it.getKey(), *getData());
     }
 }
 
@@ -338,6 +340,8 @@ TNode<T> *Tree<T>::next_smaller(TNode<T> *vertice) const
     return next_smaller(parent);
 }
 
+//the tree is balanced. worst case we get 2*h (h is height of tree)
+//most cases, i think this is actually more efficient (if the tree is very tall)
 template <class T>
 TNode<T> *Tree<T>::next_bigger(TNode<T> *vertice) const
 {
@@ -398,7 +402,7 @@ TNode<T> *Tree<T>::internalSearch(TNode<T> *node, int key_to_find) const
 }
 
 template <class T>
-bool Tree<T>::isExists(int key_to_find) const
+bool Tree<T>::isExist(int key_to_find) const
 {
     return internalSearch(root, key_to_find) != nullptr;
 }
