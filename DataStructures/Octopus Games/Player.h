@@ -6,43 +6,34 @@
 using std::cout;
 using std::endl;
 
+class Group;
+
 class Player
 {
 private:
-    int id;
     int level;
+    Group *group;
 public:
-    Player(int id);
-    Player(int id, int level);
-    Player(const Player &copy);
+    Player(int level, Group *group) : level(level), group(group) {}
+    Player(const Player &copy) = default;
     ~Player() = default;
-    int getId() const;
     int getLevel() const;
+    Group * getGroupPtr();
+    void setGroup(Group* new_group);
     void setLevel(int new_level); 
     void printPlayer() const;
     bool operator==(const Player &compare) const;
     bool operator!=(const Player &compare) const;
 };
 ////////////////////////IMPLEMENTATION///////////////////////
-
-Player::Player(int id): id(id), level(1) {}
-
-Player::Player(int id, int level): id(id), level(level) {}
-
-Player::Player(const Player &copy) 
-{
-    id = copy.id;
-    level = copy.level;
-}
-
-int Player::getId() const
-{
-    return id;
-}
-
 int Player::getLevel() const
 {
     return level;
+}
+
+Group * Player::getGroupPtr()
+{
+    return group;
 }
 
 void Player::setLevel(int new_level)
@@ -50,23 +41,15 @@ void Player::setLevel(int new_level)
     this->level = new_level;
 }
 
+void Player::setGroup(Group* new_group)
+{
+    this->group = new_group;
+}
+
 void Player::printPlayer() const
 {
     cout << "PLAYER:" << endl;
-    cout << "id = " << id << endl;
     cout << "level = " << level << endl;
+    cout << "group = ?" << endl;
 }
-
-bool Player::operator==(const Player &compare) const
-{
-    return id == compare.id;
-}
-
-bool Player::operator!=(const Player &compare) const
-{
-    return !(*this == compare);
-}
-
-
-
 #endif //PLAYER_H_

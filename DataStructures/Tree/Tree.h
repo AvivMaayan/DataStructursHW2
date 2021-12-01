@@ -25,7 +25,7 @@ private:
     TNode<T> *next_smaller(TNode<T> *vertice) const;
     friend class const_iterator;
     TNode<T> *internalSearch(TNode<T> *node, int key_to_find) const;
-    TNode<T> *internalInsert(TNode<T> *node, int key_to_insert, const T data);
+    TNode<T> *internalInsert(TNode<T> *node, int key_to_insert, const T& data, TNode<T> *to_return);
     TNode<T> *internalRemove(TNode<T> *node, int key_to_remove);
     void internalClear(TNode<T> *root);
 
@@ -42,7 +42,8 @@ public:
     bool isExist(int key_to_find) const;
     T& getData(int key_to_find) const;
     const_iterator search(const int key) const;
-    void insert(int key, const T data);
+    T& insert(int key);
+    T& insert(int key, const T& data);
     void remove(int key);                            // remove a vertice by its key
     void removeByIt(const const_iterator &iterator); // remove a vertice pointed by an iterator
     // to be deleted at the end:
@@ -425,11 +426,12 @@ typename Tree<T>::const_iterator Tree<T>::search(const int key) const
 }
 
 template <class T>
-TNode<T> *Tree<T>::internalInsert(TNode<T> *node, int key_to_insert, const T data)
+TNode<T> *Tree<T>::internalInsert(TNode<T> *node, int key_to_insert, const T& data, TNode<T> *to_return)
 {
     if (node == nullptr)
     {
-        return new TNode<T>(key_to_insert, data);
+        to_return = new TNode<T>(key_to_insert, data);
+        return to_return;
         size++;
     }
     else
@@ -442,13 +444,13 @@ TNode<T> *Tree<T>::internalInsert(TNode<T> *node, int key_to_insert, const T dat
         }
         else if (key_to_insert > key)
         {
-            TNode<T> *new_right = internalInsert(node->getRight(), key_to_insert, data);
+            TNode<T> *new_right = internalInsert(node->getRight(), key_to_insert, data, to_return);
             new_right->setParent(node);
             node->setRight(new_right);
         }
         else
         {
-            TNode<T> *new_left = internalInsert(node->getLeft(), key_to_insert, data);
+            TNode<T> *new_left = internalInsert(node->getLeft(), key_to_insert, data, to_return);
             new_left->setParent(node);
             node->setLeft(new_left);
         }
@@ -456,12 +458,25 @@ TNode<T> *Tree<T>::internalInsert(TNode<T> *node, int key_to_insert, const T dat
     return rotate(node);
 }
 
+//USE ONLY WHEN TYPE T HAS AN EMPTY C'TOR!
 template <class T>
-void Tree<T>::insert(int key, const T data)
+T& Tree<T>::insert(int key)
 {
-    root = internalInsert(root, key, data);
+    TNode<T> *to_return;
+    root = internalInsert(root, key, T(), to_return);
     left_most = root->getMin();
     right_most = root->getMax();
+    return *to_return->getData();
+}
+
+template <class T>
+T& Tree<T>::insert(int key, const T& data)
+{
+    TNode<T> *to_return;
+    root = internalInsert(root, key, data, to_return);
+    left_most = root->getMin();
+    right_most = root->getMax();
+    return to_return->getData();
 }
 
 template <class T>

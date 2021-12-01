@@ -1,12 +1,14 @@
 #include "Group.h"
+#include "Player.h"
 
-Group::Group(Id id) : group_id(id), players() {}
+//Group::Group(Id id) : group_id(id), players() {}
 
+/*
 int Group::getGroup() const
 {
     return group_id;
 }
-
+*/
 
 /**
  * @e o(log(n))
@@ -17,15 +19,16 @@ int Group::getGroup() const
 // REMEMER TO CHECK AND ADD IF NEDEED
 // BAD ALLOC CHECK
  * */
-Status Group::addPlayer(Id player, int level)
+Status Group::addPlayer(Id id, Player_ptr player)
 {
+    int level = player->getLevel();
     if (!players.isExist(level)) // this level doesn't exist
     {
-        players.insert(level, Level());
+        players.insert(level);
     }
     // level_tree defintely exists by now
     Level players_tree = players.getData(level);
-    players_tree.insert(player, player);
+    players_tree.insert(id, player);
     return SUCCESS;
 }
 
@@ -37,10 +40,16 @@ Status Group::addPlayer(Id player, int level)
  *  assuming input is valid, player exists in the game -> we know his level (from the Stack)
 // going over all of the groups in game and calling this func
  * */
-Status Group::removePlayer(Id player, int level)
+Status Group::removePlayer(Id id, Player_ptr player)
 {
+    int level = player->getLevel();
     Level players_tree = players.getData(level);
-    players_tree.remove(player);
+    players_tree.remove(id);
+    //checking if the level is now empty
+    if (players_tree.isEmpty())
+    {
+        players.remove(level);
+    }
     return SUCCESS;
 }
 
@@ -51,12 +60,17 @@ Status Group::removePlayer(Id player, int level)
  * assuming valid input, player exists -> we know his level (from the Stack)
  * WHAT ABOUT BAD ALLOC CHECK?
  * */
-Status Group::updateLevel(Id player, int level, int increasement)
+
+/* 
+Status Group::updateLevel(Id id, Player_ptr player, int increasement)
 {
+    int level = player->getLevel();
     Level players_tree = players.getData(level);
-    players_tree.remove(player);
-    return addPlayer(player, level + increasement);
+    players_tree.remove(id);
+    return addPlayer(id, player, level + increasement);
 }
+*/
+
 /**
  * @e o(1)
  * @param player pointer to the id of wanted player
@@ -71,13 +85,13 @@ Status Group::getHighestLevel(Id *player)
         *player = -1; //trash
         return SUCCESS;
     }
-    Level heighest = players.reverseBegin().getData(); //highest level
-    *player = heighest.begin().getData(); //lowest player
+    Level highest = players.reverseBegin().getData(); //highest level
+    *player = highest.begin().getKey();//lowest player
     return SUCCESS;
 }
 
 /**
- * @e o(1)
+ * @e o(n)
  * @param players_array pointer to the array of players arranged by level
  * @param num_of_players in player's array
  * players are arranged like so:
@@ -104,7 +118,7 @@ Status Group::getAllPlayersByLevel(Id **players_array, int *num_of_players)
         Level level_tree = levels_it.getData();
         for (Level::const_iterator players_it = level_tree.begin(); players_it != level_tree.end(); ++players_it)
         {
-            *players_array[i] = players_it.getData();
+            *players_array[i] = players_it.getKey();
         }
     }
     return SUCCESS;
