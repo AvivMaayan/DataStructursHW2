@@ -18,11 +18,11 @@ public:
     explicit TNode(int key, T data, TNode<T> *parent = nullptr);
     TNode(const TNode<T> &copy) = delete;
     ~TNode() = default;
-    const T &getData();
+    const T &getData() const;
+    void setData(const T& new_data);
     const int getKey() const;
     const int getHeight() const;
     const int getBalance() const;
-    void setData(T new_data);
     bool isLeaf() const;
     TNode<T> *getParent() const;
     TNode<T> *getLeft() const;
@@ -61,7 +61,7 @@ void TNode<T>::updateHeight()
 }
 
 template <class T>
-const T &TNode<T>::getData()
+const T &TNode<T>::getData() const
 {
     return data;
 }
@@ -91,7 +91,7 @@ const int TNode<T>::getBalance() const
 }
 
 template <class T>
-void TNode<T>::setData(T new_data)
+void TNode<T>::setData(const T& new_data)
 {
     data = new_data;
 }

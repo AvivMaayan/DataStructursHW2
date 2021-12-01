@@ -48,27 +48,32 @@ public:
     // to be deleted at the end:
     void printTree() const;
     void printTree(const std::string &prefix, const TNode<T> *node, bool isLeft) const;
+};
 
-    class const_iterator
-    {
-    private:
-        const Tree<T> &tree;
-        TNode<T> *element;
-        TNode<T> *getNode() const;
-        friend class Tree<T>;
-        // void setElement(TNode<T> *node);
-    public:
-        const_iterator(TNode<T> *node, const Tree<T> &tree) : element(node), tree(tree){};
-        const_iterator(const const_iterator &copy) = default;
-        ~const_iterator() = default;
-        Tree<T>::const_iterator &operator=(const const_iterator &it);
-        Tree<T>::const_iterator &operator++();
-        Tree<T>::const_iterator &operator--();
-        bool operator==(const const_iterator &it) const;
-        bool operator!=(const const_iterator &it) const;
-        T &getData(); // allowing the user to change the DATA but not the key! - only through using iterator
-        const int getKey() const;
-    };
+template <class T>
+class Tree<T>::const_iterator
+{
+private:
+    const Tree<T> *tree;
+    TNode<T> *element;
+    const_iterator(const Tree<T> *tree, TNode<T> *element)
+    : tree(tree), element(element){}
+    friend class Tree<T>;
+    TNode<T> *getNode() const;
+    // void setElement(TNode<T> *node);
+public:
+    const_iterator(const const_iterator &copy) = default;
+    ~const_iterator() = default;
+    Tree<T>::const_iterator &operator=(const const_iterator &it)= default;
+    
+    const T &getData() const; // allowing the user to change the DATA but not the key! - only through using iterator
+    const int getKey() const;
+    
+    bool operator==(const const_iterator &it) const;
+    bool operator!=(const const_iterator &it) const;
+
+    Tree<T>::const_iterator &operator++();
+    Tree<T>::const_iterator &operator--();
 };
 ////////////////////////IMPLEMENTATION///////////////////////
 
@@ -79,7 +84,7 @@ Tree<T>::const_iterator ::const_iterator(const const_iterator &copy)
 {
     this->element = copy.element;
     this->tree = copy.tree;
-}*/
+
 
 template <class T>
 typename Tree<T>::const_iterator &Tree<T>::const_iterator ::operator=(const const_iterator &it)
@@ -87,23 +92,24 @@ typename Tree<T>::const_iterator &Tree<T>::const_iterator ::operator=(const cons
     this->element = it.element;
     return *this;
 }
+}*/
 
 template <class T>
 typename Tree<T>::const_iterator &Tree<T>::const_iterator ::operator++()
 {
-    if (*this == tree.reverseBegin()) //no where to continue, biggest node
+    if (*this == tree->reverseBegin()) // no where to continue, biggest node
     {
-        this->element = nullptr; //now it is end()
+        this->element = nullptr; // now it is end()
     }
     else if (this->element->getRight() != nullptr)
     { // the next bigger is in the right sub-tree
         this->element = this->element->getRight()->getMin();
     }
-    //need to check here if root or not - if root with no right son is sent 
-    //to next_bigger, we get seg fault
-    else //next big one is somewhere above
+    // need to check here if root or not - if root with no right son is sent
+    // to next_bigger, we get seg fault
+    else // next big one is somewhere above
     {
-        this->element = tree.next_bigger(this->element);
+        this->element = tree->next_bigger(this->element);
     }
     return *this;
 }
@@ -111,7 +117,7 @@ typename Tree<T>::const_iterator &Tree<T>::const_iterator ::operator++()
 template <class T>
 typename Tree<T>::const_iterator &Tree<T>::const_iterator ::operator--()
 {
-    if (*this == tree.begin())
+    if (*this == tree->begin())
     {
         this->element = nullptr;
     }
@@ -119,9 +125,9 @@ typename Tree<T>::const_iterator &Tree<T>::const_iterator ::operator--()
     { // the next smaller one is the left son
         this->element = this->element->getLeft()->getMax();
     }
-    else //next small one is somewhere above
+    else // next small one is somewhere above
     {
-        this->element = tree.next_smaller(this->element);
+        this->element = tree->next_smaller(this->element);
     }
     return *this;
 }
@@ -143,13 +149,12 @@ bool Tree<T>::const_iterator ::operator!=(const const_iterator &it) const
 }
 
 template <class T>
-T &Tree<T>::const_iterator ::getData()
+const T &Tree<T>::const_iterator ::getData() const
 {
     if (this->element == nullptr)
     {
         throw Invalid_Input();
     }
-
     return this->element->getData();
 }
 
@@ -185,7 +190,7 @@ Tree<T>::Tree(const Tree<T> &copy)
 {
     for (Tree<T>::const_iterator it = copy.begin(); it != copy.end(); ++it)
     {
-        insert(it.getKey(), *getData());
+        insert(it.getKey(), it.getData());
     }
 }
 
@@ -340,8 +345,8 @@ TNode<T> *Tree<T>::next_smaller(TNode<T> *vertice) const
     return next_smaller(parent);
 }
 
-//the tree is balanced. worst case we get 2*h (h is height of tree)
-//most cases, i think this is actually more efficient (if the tree is very tall)
+// the tree is balanced. worst case we get 2*h (h is height of tree)
+// most cases, i think this is actually more efficient (if the tree is very tall)
 template <class T>
 TNode<T> *Tree<T>::next_bigger(TNode<T> *vertice) const
 {
@@ -416,7 +421,7 @@ T Tree<T>::getData(int key_to_find) const
 template <class T>
 typename Tree<T>::const_iterator Tree<T>::search(const int key) const
 {
-    return Tree<T>::const_iterator(internalSearch(root, key), *this);
+    return Tree<T>::const_iterator(this, internalSearch(root, key));
 }
 
 template <class T>
@@ -533,19 +538,19 @@ void Tree<T>::removeByIt(const Tree<T>::const_iterator &iterator)
 template <class T>
 typename Tree<T>::const_iterator Tree<T>::begin() const
 {
-    return Tree<T>::const_iterator(left_most, *this);
+    return Tree<T>::const_iterator(this, left_most);
 }
 
 template <class T>
 typename Tree<T>::const_iterator Tree<T>::reverseBegin() const
 {
-    return Tree<T>::const_iterator(right_most, *this);
+    return Tree<T>::const_iterator(this, right_most);
 }
 
 template <class T>
 typename Tree<T>::const_iterator Tree<T>::end() const
 {
-    return Tree<T>::const_iterator(nullptr, *this);
+    return Tree<T>::const_iterator(this, nullptr);
 }
 
 template <class T>

@@ -10,6 +10,6 @@ Group: (not deleted when is empty)
 Player: is just an id 
 
 TDL:
-1.  
+1. talk with a Metargel about time complexity of our iterator 
 2.  
 3.  
