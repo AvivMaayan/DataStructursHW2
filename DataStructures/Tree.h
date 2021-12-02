@@ -437,8 +437,9 @@ TNode<T> *Tree<T>::internalInsert(TNode<T> *node, int key_to_insert, const T &da
     if (node == nullptr)
     {
         to_return = new TNode<T>(key_to_insert, data);
-        return to_return;
         size++;
+        return to_return;
+        
     }
     else
     {
@@ -598,7 +599,7 @@ void Tree<T>::getKeysArray(int* keys)
 template <class T>
 void Tree<T>::ArrayToTree(T* array,int* keys ,int start, int end)
 {
-    this->internalArrayToTree(root, array, start, end);
+    this->internalArrayToTree(nullptr, keys,  array, start, end);
 }
 
 template <class T>
@@ -609,9 +610,10 @@ TNode<T>* Tree<T>::internalArrayToTree(TNode<T>* parent, int* keys, T* array, in
         return nullptr;
     }
     int middle = (start + end) / 2;
-    TNode<T>* curr = new TNode<T>(key[middle], array[middle], parent);
-    curr->left = internalArrayToTree(curr, keys, array, start, middle);
-    curr->right = internalArrayToTree(curr, keys, array, middle, start);
+    TNode<T>* curr = new TNode<T>(keys[middle], array[middle], parent);
+    curr->setLeft(internalArrayToTree(curr, keys, array, start, middle));
+    curr->setRight(internalArrayToTree(curr, keys, array, middle, start));
+    return curr;
 }
 
 template <class T>

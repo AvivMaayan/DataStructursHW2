@@ -153,7 +153,7 @@ void Group::GroupToArray(Level_ptr* level_array)
     int i=0;
     for(Tree<Level_ptr>::const_iterator it = levels.begin(); it != levels.end(); ++it)
     {
-        level_array[i] = it.getData();
+        level_array[i]->players = it.getData()->players;
         i++;
     }
     assert(i == levels.getSize()-1); //making sure everyone got into level_array
