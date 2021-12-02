@@ -51,8 +51,8 @@ public:
     T &insert(int key, const T &data);
     void remove(int key);                            // remove a vertice by its key
     void removeByIt(const const_iterator &iterator); // remove a vertice pointed by an iterator
-    void getKeysArray(int* keys);
-    void ArrayToTree(T* array, int start, int end);
+    //void getKeysArray(int* keys);
+    void ArrayToTree(T* array,int* keys, int start, int end);
     // to be deleted at the end:
     void printTree() const;
     void printTree(const std::string &prefix, const TNode<T> *node, bool isLeft) const;
@@ -596,7 +596,7 @@ void Tree<T>::getKeysArray(int* keys)
 }*/
 
 template <class T>
-void Tree<T>::ArrayToTree(T* array, int start, int end)
+void Tree<T>::ArrayToTree(T* array,int* keys ,int start, int end)
 {
     this->internalArrayToTree(root, array, start, end);
 }

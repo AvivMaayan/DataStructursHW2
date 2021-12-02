@@ -17,16 +17,6 @@ int Game::getNumberOfLevels()
     return levels.getNumberOfLevels();
 }
 
-void Game::ArrayToGroup(Level_ptr *level_array, int size, Group_ptr result)
-{
-    //assuming allocation of Group already happend
-    int keys[size];
-    for(int i=0; i< size; i++)
-    {
-        keys[i] = level_array[i]->getLevel();
-    }
-    
-}
 
 // merging 2 groups to a new group. removing the old 2 from the tree.
 void Game::MergeGroups(int origID, int replaceID)
@@ -68,7 +58,7 @@ void Game::MergeGroups(int origID, int replaceID)
     UpdateGroupPtr(result_array, result_size, new_group);
 
     // making it a group o(n + m)
-    ArrayToGroup(result_array, result_size, new_group);
+    new_group->ArrayToGroup(result_array, result_size);
 
     // rempving old groups o(logk)
     this->groups.getData(replaceID) = new_group;
@@ -199,24 +189,10 @@ void Game::MergeLevelsToSameGroup(Level_ptr level1, Level_ptr level2, Level_ptr 
     level1->LevelToArray(array1);
     level2->LevelToArray(array2);
     MergePlayersOfSameLevel(array1, array2, size_of_first_level, size_of_second_level, result_array);
-    ArrayToLevel(result_array, result_size, result);
+    result->ArrayToLevel(result_array, result_size);
     delete array1;
     delete array2;
     delete result_array;
-}
-
-//creates a Level from a given array of players already arranged, puts the final Level in result
-void Game::ArrayToLevel(Player_ptr* level_array, int size, Level_ptr result)
-{
-    //assuming allocation of Level already happend
-    if(size == 0)
-    {
-        return;
-    }
-    int middle = size / 2 ;
-    result->addPlayer(level_array[middle]->getId(), level_array[middle]); //middle ptr is inserted as root.
-    ArrayToLevel(level_array, size/2, result);
-    ArrayToLevel(level_array + size/2 + 1 , size/2, result);
 }
 
 void Game::UpdateGroupPtr(Level_ptr *level_array, int size, Group_ptr new_group)

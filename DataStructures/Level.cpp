@@ -21,6 +21,18 @@ Status Level::addPlayer(Id id, Player_ptr player)
     return S_SUCCESS;
 }
 
+//creates a Level from a given array of players already arranged
+void Level::ArrayToLevel(Player_ptr *level_array, int size)
+{
+    //assuming allocation of Group already happend
+    int keys[size];
+    for(int i=0; i< size; i++)
+    {
+        keys[i] = level_array[i]->getId();
+    }
+    players.ArrayToTree(level_array, keys, 0, size);
+}
+
 /**
  * @e o(log(n))
  * @param .

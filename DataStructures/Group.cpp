@@ -28,6 +28,19 @@ void Group::addLevel(Level_ptr new_level)
     levels.insert(new_level->getLevel(), new_level);
 }
 
+// creates a Group from a given array of levels already arranged
+void Group::ArrayToGroup(Level_ptr *level_array, int size)
+{
+    //assuming allocation of Group already happend
+    int keys[size];
+    for(int i=0; i< size; i++)
+    {
+        keys[i] = level_array[i]->getLevel();
+    }
+    levels.ArrayToTree(level_array, keys, 0, size);
+}
+
+
 /**
  * @e o(log(n))
  * @param .

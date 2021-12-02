@@ -15,6 +15,7 @@ private:
 public:
     Group() : levels() {}
     Group(const Group &group) = delete;
+    void ArrayToGroup(Level_ptr *level_array, int size); //c'tor by array
     ~Group() = default;
     bool isLevelExist(int level);
     bool isEmpty();
