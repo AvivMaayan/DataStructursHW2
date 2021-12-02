@@ -32,6 +32,7 @@ private:
     TNode<T> *internalInsert(TNode<T> *node, int key_to_insert, const T &data, TNode<T> *to_return);
     TNode<T> *internalRemove(TNode<T> *node, int key_to_remove);
     void internalClear(TNode<T> *root);
+    TNode<T>* internalArrayToTree(TNode<T>* parent, int* keys, T* array, int start, int end);
 
 public:
     class const_iterator;
@@ -50,6 +51,8 @@ public:
     T &insert(int key, const T &data);
     void remove(int key);                            // remove a vertice by its key
     void removeByIt(const const_iterator &iterator); // remove a vertice pointed by an iterator
+    void getKeysArray(int* keys);
+    void ArrayToTree(T* array, int start, int end);
     // to be deleted at the end:
     void printTree() const;
     void printTree(const std::string &prefix, const TNode<T> *node, bool isLeft) const;
@@ -579,6 +582,36 @@ template <class T>
 typename Tree<T>::const_iterator Tree<T>::end() const
 {
     return Tree<T>::const_iterator(this, nullptr);
+}
+
+/**
+template <class T>
+void Tree<T>::getKeysArray(int* keys)
+{
+    int i = 0;
+    for(const_iterator it = begin(); it != end(); ++it)
+    {
+        keys[i] = it
+    }
+}*/
+
+template <class T>
+void Tree<T>::ArrayToTree(T* array, int start, int end)
+{
+    this->internalArrayToTree(root, array, start, end);
+}
+
+template <class T>
+TNode<T>* Tree<T>::internalArrayToTree(TNode<T>* parent, int* keys, T* array, int start, int end)
+{
+    if(start > end)
+    {
+        return nullptr;
+    }
+    int middle = (start + end) / 2;
+    TNode<T>* curr = new TNode<T>(key[middle], array[middle], parent);
+    curr->left = internalArrayToTree(curr, keys, array, start, middle);
+    curr->right = internalArrayToTree(curr, keys, array, middle, start);
 }
 
 template <class T>

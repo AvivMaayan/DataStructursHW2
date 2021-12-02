@@ -63,5 +63,4 @@ void Level::LevelToArray(Player_ptr *level_array)
         level_array[i] = it.getData();
         i++;
     }
-    assert(i == players.getSize() - 1); // making sure everyone got into level_array
 }

@@ -20,14 +20,12 @@ int Game::getNumberOfLevels()
 void Game::ArrayToGroup(Level_ptr *level_array, int size, Group_ptr result)
 {
     //assuming allocation of Group already happend
-    if(size == 0)
+    int keys[size];
+    for(int i=0; i< size; i++)
     {
-        return;
+        keys[i] = level_array[i]->getLevel();
     }
-    int middle = size / 2 ;
-    result->addLevel(level_array[middle]); //middle ptr is inserted as root.
-    ArrayToGroup(level_array, size/2, result);
-    ArrayToGroup(level_array + size/2 + 1 , size/2, result);
+    
 }
 
 // merging 2 groups to a new group. removing the old 2 from the tree.
