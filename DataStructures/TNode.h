@@ -15,12 +15,12 @@ private:
 
 public:
     TNode();
-    explicit TNode(int key, const T& data, TNode<T> *parent = nullptr);
+    explicit TNode(int key, const T &data, TNode<T> *parent = nullptr);
     TNode(const TNode<T> &copy) = delete;
     ~TNode() = default;
     T &getData();
     const T &getDataConst() const;
-    void setData(const T& new_data);
+    void setData(const T &new_data);
     const int getKey() const;
     const int getHeight() const;
     const int getBalance() const;
@@ -28,20 +28,20 @@ public:
     TNode<T> *getParent() const;
     TNode<T> *getLeft() const;
     TNode<T> *getRight() const;
-    TNode<T> *getMin() ;
-    TNode<T> *getMax() ;
+    TNode<T> *getMin();
+    TNode<T> *getMax();
     void setParent(TNode<T> *node);
     void setLeft(TNode<T> *node);
     void setRight(TNode<T> *node);
-    void setKey(int key); //dangerous function! only used by Tree 
+    void setKey(int key); // dangerous function! only used by Tree
     void updateBalance();
     void updateHeight();
     int calculate_update_balance();
 };
 
 template <class T>
-TNode<T>::TNode(int key, const T& data, TNode<T> *parent)
-    : height(0), balance(0), key(key), left(nullptr), right(nullptr), data(data), parent(parent)
+TNode<T>::TNode(int key, const T &data, TNode<T> *parent)
+    : key(key), height(0), balance(0), parent(parent), left(nullptr), right(nullptr), data(data)
 {
 }
 
@@ -58,11 +58,11 @@ void TNode<T>::updateHeight()
 {
     int l_height = (left == nullptr) ? -1 : left->height;
     int r_height = (right == nullptr) ? -1 : right->height;
-    height = std::max(l_height,r_height)+1;
+    height = std::max(l_height, r_height) + 1;
 }
 
 template <class T>
-T &TNode<T>::getData() 
+T &TNode<T>::getData()
 {
     return data;
 }
@@ -98,7 +98,7 @@ const int TNode<T>::getBalance() const
 }
 
 template <class T>
-void TNode<T>::setData(const T& new_data)
+void TNode<T>::setData(const T &new_data)
 {
     data = new_data;
 }
@@ -128,7 +128,7 @@ TNode<T> *TNode<T>::getRight() const
 }
 
 template <class T>
-TNode<T> *TNode<T>::getMin() 
+TNode<T> *TNode<T>::getMin()
 {
     if (left == nullptr)
     {
@@ -138,7 +138,7 @@ TNode<T> *TNode<T>::getMin()
 }
 
 template <class T>
-TNode<T> *TNode<T>::getMax() 
+TNode<T> *TNode<T>::getMax()
 {
     if (right == nullptr)
     {
@@ -172,4 +172,4 @@ int TNode<T>::calculate_update_balance()
     return balance;
 }
 
-#endif //NODE_H_
+#endif // NODE_H_

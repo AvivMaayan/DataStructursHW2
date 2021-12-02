@@ -21,7 +21,7 @@ Status Game::AddGroup(int GroupID)
     try
     {
         groups.insert(GroupID, make_shared<Group>());
-        //Player_ptr player = make_shared<Player>(Level, group_ptr);
+        // Player_ptr player = make_shared<Player>(Level, group_ptr);
     }
     catch (const std::exception &e)
     {

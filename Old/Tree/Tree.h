@@ -7,10 +7,10 @@
 #include <cassert>
 #include <memory>
 
-using std::shared_ptr;
-using std::make_shared;
 using std::cout;
 using std::endl;
+using std::make_shared;
+using std::shared_ptr;
 
 template <class T>
 class Tree
@@ -29,7 +29,7 @@ private:
     TNode<T> *next_smaller(TNode<T> *vertice) const;
     friend class const_iterator;
     TNode<T> *internalSearch(TNode<T> *node, int key_to_find) const;
-    TNode<T> *internalInsert(TNode<T> *node, int key_to_insert, const T& data, TNode<T> *to_return);
+    TNode<T> *internalInsert(TNode<T> *node, int key_to_insert, const T &data, TNode<T> *to_return);
     TNode<T> *internalRemove(TNode<T> *node, int key_to_remove);
     void internalClear(TNode<T> *root);
 
@@ -44,10 +44,10 @@ public:
     bool isEmpty() const;
     int getSize() const;
     bool isExist(int key_to_find) const;
-    T& getData(int key_to_find) const;
+    T &getData(int key_to_find) const;
     const_iterator search(const int key) const;
-    //T& insert(int key);
-    T& insert(int key, const T& data);
+    // T& insert(int key);
+    T &insert(int key, const T &data);
     void remove(int key);                            // remove a vertice by its key
     void removeByIt(const const_iterator &iterator); // remove a vertice pointed by an iterator
     // to be deleted at the end:
@@ -62,18 +62,18 @@ private:
     const Tree<T> *tree;
     TNode<T> *element;
     const_iterator(const Tree<T> *tree, TNode<T> *element)
-    : tree(tree), element(element){}
+        : tree(tree), element(element) {}
     friend class Tree<T>;
     TNode<T> *getNode() const;
     // void setElement(TNode<T> *node);
 public:
     const_iterator(const const_iterator &copy) = default;
     ~const_iterator() = default;
-    Tree<T>::const_iterator &operator=(const const_iterator &it)= default;
-    
+    Tree<T>::const_iterator &operator=(const const_iterator &it) = default;
+
     T &getData() const; // allowing the user to change the DATA but not the key! - only through using iterator
     const int getKey() const;
-    
+
     bool operator==(const const_iterator &it) const;
     bool operator!=(const const_iterator &it) const;
 
@@ -417,7 +417,7 @@ bool Tree<T>::isExist(int key_to_find) const
 }
 
 template <class T>
-T& Tree<T>::getData(int key_to_find) const
+T &Tree<T>::getData(int key_to_find) const
 {
     return search(key_to_find).getData();
 }
@@ -429,7 +429,7 @@ typename Tree<T>::const_iterator Tree<T>::search(const int key) const
 }
 
 template <class T>
-TNode<T> *Tree<T>::internalInsert(TNode<T> *node, int key_to_insert, const T& data, TNode<T> *to_return)
+TNode<T> *Tree<T>::internalInsert(TNode<T> *node, int key_to_insert, const T &data, TNode<T> *to_return)
 {
     if (node == nullptr)
     {
@@ -461,7 +461,7 @@ TNode<T> *Tree<T>::internalInsert(TNode<T> *node, int key_to_insert, const T& da
     return rotate(node);
 }
 
-//USE ONLY WHEN TYPE T HAS AN EMPTY C'TOR!
+// USE ONLY WHEN TYPE T HAS AN EMPTY C'TOR!
 /*template <class T>
 T& Tree<T>::insert(int key)
 {
@@ -483,7 +483,7 @@ T& Tree<T>::insert(int key, )
 }
 */
 template <class T>
-T& Tree<T>::insert(int key, const T& data)
+T &Tree<T>::insert(int key, const T &data)
 {
     TNode<T> *to_return;
     root = internalInsert(root, key, data, to_return);
@@ -553,8 +553,8 @@ template <class T>
 void Tree<T>::remove(int key)
 {
     root = internalRemove(root, key);
-    left_most = (root!=nullptr) ? root->getMin() : nullptr;
-    right_most = (root!=nullptr) ? root->getMax() : nullptr;
+    left_most = (root != nullptr) ? root->getMin() : nullptr;
+    right_most = (root != nullptr) ? root->getMax() : nullptr;
 }
 
 template <class T>

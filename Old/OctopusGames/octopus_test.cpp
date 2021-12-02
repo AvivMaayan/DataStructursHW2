@@ -6,9 +6,10 @@ using std::cout;
 using std::endl;
 using std::string;
 
-#define TEST(num) cout << endl \
-                       << "TEST " << (num) << endl; \
-                       }
+#define TEST(num)                     \
+    cout << endl                      \
+         << "TEST " << (num) << endl; \
+    }
 
 /**
  * some macros to be defined:
@@ -17,5 +18,3 @@ using std::string;
  * ANIMALS
  * WISH_U_HERE
  * */
-
-

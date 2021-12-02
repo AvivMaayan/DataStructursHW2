@@ -18,7 +18,7 @@ StatusType AddGroup(void *DS, int GroupID)
 
 StatusType AddPlayer(void *DS, int PlayerID, int GroupID, int Level)
 {
-    if (!DS || GroupID <= 0 || PlayerID <= 0, Level<0)
+    if (!DS || GroupID <= 0 || PlayerID <= 0 || Level < 0)
     {
         return (StatusType)INVALID_INPUT;
     }
@@ -36,7 +36,7 @@ StatusType RemovePlayer(void *DS, int PlayerID)
 
 StatusType ReplaceGroup(void *DS, int GroupID, int ReplacementID)
 {
-    if (!DS || GroupID <= 0 || ReplacementID <= 0 || GroupID==ReplacementID)
+    if (!DS || GroupID <= 0 || ReplacementID <= 0 || GroupID == ReplacementID)
     {
         return (StatusType)INVALID_INPUT;
     }
@@ -68,7 +68,7 @@ StatusType GetAllPlayersByLevel(void *DS, int GroupID, int **Players, int *numOf
         return (StatusType)INVALID_INPUT;
     }
 
-    *Players = (int*)malloc(sizeof(int) * *numOfPlayers); 
+    *Players = (int *)malloc(sizeof(int) * *numOfPlayers);
     if (!*Players)
     {
         return (StatusType)ALLOCATION_ERROR;
@@ -83,8 +83,8 @@ StatusType GetGroupsHighestLevel(void *DS, int numOfGroups, int **Players)
     {
         return (StatusType)INVALID_INPUT;
     }
-    
-    *Players = (int*)malloc(sizeof(int) * numOfGroups);
+
+    *Players = (int *)malloc(sizeof(int) * numOfGroups);
     if (!*Players)
     {
         return (StatusType)ALLOCATION_ERROR;
@@ -93,8 +93,8 @@ StatusType GetGroupsHighestLevel(void *DS, int numOfGroups, int **Players)
     return (StatusType)((Game *)DS)->GetGroupsHighestLevel(numOfGroups, Players);
 }
 
-void Quit(void** DS)
+void Quit(void **DS)
 {
-    delete (Game*)*DS;
+    delete (Game *)*DS;
     *DS = NULL;
 }

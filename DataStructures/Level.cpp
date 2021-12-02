@@ -1,14 +1,10 @@
 #include "Level.h"
 #include "Player.h"
 
-
-
-
 Player_ptr Level::getPlayerPtr(Id id)
 {
     return players.getData(id);
 }
-
 
 /**
  * @e o(log(n))
@@ -24,7 +20,6 @@ Status Level::addPlayer(Id id, Player_ptr player)
     players.insert(id, player);
     return S_SUCCESS;
 }
-
 
 /**
  * @e o(log(n))
@@ -44,7 +39,7 @@ bool Level::isEmpty()
     return players.isEmpty();
 }
 
-bool Level::isPlayerExist(Id id) 
+bool Level::isPlayerExist(Id id)
 {
     return players.isExist(id);
 }

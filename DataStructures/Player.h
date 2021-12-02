@@ -17,6 +17,7 @@ class Player
 private:
     int level;
     Group_ptr group;
+
 public:
     Player(int level, Group_ptr group) : level(level), group(group) {}
     Player(const Player &copy) = default;
@@ -24,9 +25,9 @@ public:
     int getLevel() const;
     Group_ptr getGroupPtr();
     void setGroup(Group_ptr new_group);
-    void setLevel(int new_level); 
+    void setLevel(int new_level);
     void printPlayer() const;
     bool operator==(const Player &compare) const;
     bool operator!=(const Player &compare) const;
 };
-#endif //PLAYER_H_
+#endif // PLAYER_H_

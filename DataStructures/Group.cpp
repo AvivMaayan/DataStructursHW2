@@ -23,7 +23,6 @@ Status Group::addPlayer(Id id, Player_ptr player)
     return S_SUCCESS;
 }
 
-
 /**
  * @e o(log(n))
  * @param .
@@ -36,7 +35,7 @@ Status Group::removePlayer(Id id, Player_ptr player)
     int level = player->getLevel();
     Level_ptr players_tree = levels.getData(level);
     players_tree->removePlayer(id);
-    //checking if the level is now empty
+    // checking if the level is now empty
     if (players_tree->isEmpty())
     {
         levels.remove(level);
@@ -44,12 +43,10 @@ Status Group::removePlayer(Id id, Player_ptr player)
     return S_SUCCESS;
 }
 
-
-bool Group::isLevelExist(int level) 
+bool Group::isLevelExist(int level)
 {
     return levels.isExist(level);
 }
-
 
 Level_ptr Group::getLevelPtr(int level)
 {
@@ -64,7 +61,7 @@ Level_ptr Group::getLevelPtr(int level)
  * WHAT ABOUT BAD ALLOC CHECK?
  * */
 
-/* 
+/*
 Status Group::updateLevel(Id id, Player_ptr player, int increasement)
 {
     int level = player->getLevel();
@@ -83,13 +80,13 @@ Status Group::updateLevel(Id id, Player_ptr player, int increasement)
  * */
 Status Group::getHighestLevel(Id *player)
 {
-    if (levels.isEmpty()) //there are no players in the group
+    if (levels.isEmpty()) // there are no players in the group
     {
-        *player = -1; //trash
+        *player = -1; // trash
         return S_SUCCESS;
     }
-    Level_ptr highest = levels.reverseBegin().getData(); //highest level
-    *player = highest->players.begin().getKey(); //lowest player
+    Level_ptr highest = levels.reverseBegin().getData(); // highest level
+    *player = highest->players.begin().getKey();         // lowest player
     return S_SUCCESS;
 }
 
@@ -110,9 +107,9 @@ bool Group::isEmpty()
 Status Group::getAllPlayersByLevel(Id **players_array, int *num_of_players)
 {
     *num_of_players = levels.getSize();
-    if (*num_of_players==0)
+    if (*num_of_players == 0)
     {
-        players_array=NULL;
+        players_array = NULL;
         return S_SUCCESS;
     }
     int i = 0;

@@ -19,7 +19,7 @@ public:
         this->error_msg[msg.length()] = '\0';
     };
     const char *what() const noexcept override
-    { 
+    {
         return this->error_msg;
     };
 };

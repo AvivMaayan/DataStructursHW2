@@ -17,9 +17,9 @@ using std::string;
         cout << endl                                                  \
              << "++++++++++++++++++++++++++++++++++++++++++" << endl; \
     }
-#define THEWALL2()                                                     \
+#define THEWALL2()                                                    \
     {                                                                 \
-        tree2.printTree();                                             \
+        tree2.printTree();                                            \
         cout << endl                                                  \
              << "++++++++++++++++++++++++++++++++++++++++++" << endl; \
     }
@@ -34,13 +34,13 @@ int main()
     tree.insert(8, 8);
     tree.insert(4, 4);
     THEWALL();
-    Tree<int>::const_iterator it = tree.search(8); //leaf search
+    Tree<int>::const_iterator it = tree.search(8); // leaf search
     cout << it.getData() << endl;
-    it = tree.search(5); //root search
+    it = tree.search(5); // root search
     cout << it.getData() << endl;
     try
     {
-        it = tree.search(1); //doesn't exist
+        it = tree.search(1); // doesn't exist
     }
     catch (Exception e)
     {
@@ -56,9 +56,9 @@ int main()
     THEWALL()
     tree.insert(0, 0);
     THEWALL()
-    tree.insert(4, 4); //already there
+    tree.insert(4, 4); // already there
     THEWALL()
-    tree.getData(4) =5;
+    tree.getData(4) = 5;
     THEWALL()
 
     TEST(1.3)
@@ -69,7 +69,7 @@ int main()
     THEWALL()
     tree.remove(5);
     THEWALL()
-    tree.remove(-2); //doesn't exist
+    tree.remove(-2); // doesn't exist
 
     TEST(1.4)
     cout << "Testing remove by it" << endl;
@@ -110,7 +110,7 @@ int main()
     try
     {
         it = tree.search(13);
-        ++it; //nowhere to go
+        ++it; // nowhere to go
         cout << it.getData() << endl;
     }
     catch (Exception e)
@@ -131,15 +131,14 @@ int main()
     --it;
     cout << it.getData() << endl;
 
-
     TEST(1.8)
     Tree<int> tree2 = Tree<int>();
-    tree2.insert(5,5);
-    tree2.insert(4,4);
-    tree2.insert(6,6);
-    tree2.insert(2,2);
+    tree2.insert(5, 5);
+    tree2.insert(4, 4);
+    tree2.insert(6, 6);
+    tree2.insert(2, 2);
     THEWALL2();
-    tree2.insert(3,3);
+    tree2.insert(3, 3);
     THEWALL2();
 
     return 0;
