@@ -2,21 +2,17 @@
 #define LEVEL_H_
 
 #include <iostream>
-
 #include "../Tree/Tree.h"
-#include <memory>
 
 using std::cout;
 using std::endl;
 using std::string;
-using std::shared_ptr;
-using std::make_shared;
 
 typedef enum {
-    SUCCESS = 0,
-    FAILURE = -1,
-    ALLOCATION_ERROR = -2,
-    INVALID_INPUT = -3
+    S_SUCCESS = 0,
+    S_FAILURE = -1,
+    S_ALLOCATION_ERROR = -2,
+    S_INVALID_INPUT = -3
 } Status;
 
 class Player;

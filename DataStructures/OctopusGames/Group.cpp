@@ -15,12 +15,12 @@ Status Group::addPlayer(Id id, Player_ptr player)
     int level = player->getLevel();
     if (!levels.isExist(level)) // this level doesn't exist
     {
-        levels.insert(level);
+        levels.insert(level, make_shared<Level>());
     }
     // level_tree defintely exists by now
     Level_ptr players_tree = levels.getData(level);
     players_tree->addPlayer(id, player);
-    return SUCCESS;
+    return S_SUCCESS;
 }
 
 
@@ -41,7 +41,7 @@ Status Group::removePlayer(Id id, Player_ptr player)
     {
         levels.remove(level);
     }
-    return SUCCESS;
+    return S_SUCCESS;
 }
 
 
@@ -86,11 +86,11 @@ Status Group::getHighestLevel(Id *player)
     if (levels.isEmpty()) //there are no players in the group
     {
         *player = -1; //trash
-        return SUCCESS;
+        return S_SUCCESS;
     }
     Level_ptr highest = levels.reverseBegin().getData(); //highest level
     *player = highest->players.begin().getKey(); //lowest player
-    return SUCCESS;
+    return S_SUCCESS;
 }
 
 bool Group::isEmpty()
@@ -113,7 +113,7 @@ Status Group::getAllPlayersByLevel(Id **players_array, int *num_of_players)
     if (*num_of_players==0)
     {
         players_array=NULL;
-        return SUCCESS;
+        return S_SUCCESS;
     }
     int i = 0;
     for (Tree<Level_ptr>::const_iterator levels_it = levels.reverseBegin(); levels_it != levels.end(); --levels_it)
@@ -124,5 +124,5 @@ Status Group::getAllPlayersByLevel(Id **players_array, int *num_of_players)
             *players_array[i] = players_it.getKey();
         }
     }
-    return SUCCESS;
+    return S_SUCCESS;
 }

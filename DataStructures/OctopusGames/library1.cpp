@@ -95,6 +95,6 @@ StatusType GetGroupsHighestLevel(void *DS, int numOfGroups, int **Players)
 
 void Quit(void** DS)
 {
-    delete *DS;
-    DS = NULL;
+    delete (Game*)*DS;
+    *DS = NULL;
 }

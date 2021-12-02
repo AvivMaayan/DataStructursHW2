@@ -22,7 +22,7 @@ Player_ptr Level::getPlayerPtr(Id id)
 Status Level::addPlayer(Id id, Player_ptr player)
 {
     players.insert(id, player);
-    return SUCCESS;
+    return S_SUCCESS;
 }
 
 
@@ -36,7 +36,7 @@ Status Level::addPlayer(Id id, Player_ptr player)
 Status Level::removePlayer(Id id)
 {
     players.remove(id);
-    return SUCCESS;
+    return S_SUCCESS;
 }
 
 bool Level::isEmpty()

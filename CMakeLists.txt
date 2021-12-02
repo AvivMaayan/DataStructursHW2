@@ -9,7 +9,13 @@ set(CMAKE_BUILD_TYPE Debug)
 set(FLAGS_DEBUG "-std=c++11 --pedantic-errors -Wall -Werror")
 set(CMAKE_CPP_FLAGS ${FLAGS_DEBUG})
 set(CPP_FILES 
-./DataStructures/Tree/test_tree.cpp
+./DataStructures/OctopusGames/Player.cpp
+./DataStructures/OctopusGames/Level.cpp
+./DataStructures/OctopusGames/Group.cpp
+./DataStructures/OctopusGames/Game.cpp
+./DataStructures/OctopusGames/library1.cpp
+./DataStructures/OctopusGames/main1.cpp
+
 )
 add_executable(DataSructuresHW2 ${CPP_FILES})
 

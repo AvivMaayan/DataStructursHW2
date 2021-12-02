@@ -3,8 +3,12 @@
 
 #include <iostream>
 #include "TNode.h"
+#include "../Exeptions/exeptions.h"
 #include <cassert>
+#include <memory>
 
+using std::shared_ptr;
+using std::make_shared;
 using std::cout;
 using std::endl;
 
@@ -42,7 +46,7 @@ public:
     bool isExist(int key_to_find) const;
     T& getData(int key_to_find) const;
     const_iterator search(const int key) const;
-    T& insert(int key);
+    //T& insert(int key);
     T& insert(int key, const T& data);
     void remove(int key);                            // remove a vertice by its key
     void removeByIt(const const_iterator &iterator); // remove a vertice pointed by an iterator
@@ -272,8 +276,7 @@ TNode<T> *Tree<T>::LL(TNode<T> *not_balanced)
 }
 
 template <class T>
-TNode<T> *Tree<T>::
-    RR(TNode<T> *not_balanced)
+TNode<T> *Tree<T>::RR(TNode<T> *not_balanced)
 {
     // helpful definitions:
     TNode<T> *parent = not_balanced->getParent();
@@ -459,16 +462,26 @@ TNode<T> *Tree<T>::internalInsert(TNode<T> *node, int key_to_insert, const T& da
 }
 
 //USE ONLY WHEN TYPE T HAS AN EMPTY C'TOR!
-template <class T>
+/*template <class T>
 T& Tree<T>::insert(int key)
 {
     TNode<T> *to_return;
     root = internalInsert(root, key, T(), to_return);
     left_most = root->getMin();
     right_most = root->getMax();
-    return *to_return->getData();
+    return to_return->getData();
 }
 
+template <class T>
+T& Tree<T>::insert(int key, )
+{
+    TNode<T> *to_return;
+    root = internalInsert(root, key, T(), to_return);
+    left_most = root->getMin();
+    right_most = root->getMax();
+    return to_return->getData();
+}
+*/
 template <class T>
 T& Tree<T>::insert(int key, const T& data)
 {
@@ -540,8 +553,8 @@ template <class T>
 void Tree<T>::remove(int key)
 {
     root = internalRemove(root, key);
-    left_most = root->getMin();
-    right_most = root->getMax();
+    left_most = (root!=nullptr) ? root->getMin() : nullptr;
+    right_most = (root!=nullptr) ? root->getMax() : nullptr;
 }
 
 template <class T>
