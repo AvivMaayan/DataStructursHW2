@@ -54,6 +54,8 @@ Status Game::AddPlayer(int PlayerID, int GroupID, int Level)
     }
     try
     {
+        //we are using T& Tree<T>::(int key_to_find) 
+        //only when we know that Tree<T>.isExist(key_to_find) is true!
         Group_ptr group_ptr = groups.getData(GroupID);
         Player_ptr player = make_shared<Player>(Level, group_ptr);
 
@@ -134,6 +136,8 @@ Status Game::GetHighestLevel(int GroupID, int *PlayerID)
     {
         return FAILURE;
     }
+    //we are using T& Tree<T>::(int key_to_find) 
+    //only when we know that Tree<T>.isExist(key_to_find) is true!
     Group_ptr group_ptr = groups.getData(GroupID);
     return group_ptr->getHighestLevel(PlayerID);
 }
@@ -148,6 +152,8 @@ Status Game::GetAllPlayersByLevel(int GroupID, int **Players, int *numOfPlayers)
     {
         return FAILURE;
     }
+    //we are using T& Tree<T>::(int key_to_find) 
+    //only when we know that Tree<T>.isExist(key_to_find) is true!
     Group_ptr group_ptr = groups.getData(GroupID);
     return group_ptr->getAllPlayersByLevel(Players, numOfPlayers);
 }
