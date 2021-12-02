@@ -43,3 +43,25 @@ bool Level::isPlayerExist(Id id)
 {
     return players.isExist(id);
 }
+
+int Level::getSizeOfLevel() // number of players in this level
+{
+    return players.getSize();
+}
+int Level::getLevel() // returns what level is this
+{
+    return players.begin().getData()->getLevel();
+}
+
+// makes an arranged array (by id) of Player_ptr out of the tree
+void Level::LevelToArray(Player_ptr *level_array)
+{
+    // assuming arrays have enough place for everyone and already inisialized
+    int i = 0;
+    for (Tree<Player_ptr>::const_iterator it = players.begin(); it != players.end(); ++it)
+    {
+        level_array[i] = it.getData();
+        i++;
+    }
+    assert(i == players.getSize() - 1); // making sure everyone got into level_array
+}

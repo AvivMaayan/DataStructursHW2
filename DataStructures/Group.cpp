@@ -23,6 +23,11 @@ Status Group::addPlayer(Id id, Player_ptr player)
     return S_SUCCESS;
 }
 
+void Group::addLevel(Level_ptr new_level)
+{
+    levels.insert(new_level->getLevel(), new_level);
+}
+
 /**
  * @e o(log(n))
  * @param .
@@ -123,3 +128,21 @@ Status Group::getAllPlayersByLevel(Id **players_array, int *num_of_players)
     }
     return S_SUCCESS;
 }
+
+int Group::getNumberOfLevels()
+{
+    return levels.getSize();
+}
+
+//makes an arranged array (by level) of Level_ptr out of the tree "levels"
+void Group::GroupToArray(Level_ptr* level_array) 
+{
+    int i=0;
+    for(Tree<Level_ptr>::const_iterator it = levels.begin(); it != levels.end(); ++it)
+    {
+        level_array[i] = it.getData();
+        i++;
+    }
+    assert(i == levels.getSize()-1); //making sure everyone got into level_array
+}
+

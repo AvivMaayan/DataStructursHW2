@@ -15,7 +15,6 @@ set(CPP_FILES
 ./DataStructures/Game.cpp
 ./DataStructures/library1.cpp
 ./DataStructures/main1.cpp
-
 )
 add_executable(DataSructuresHW2 ${CPP_FILES})
 

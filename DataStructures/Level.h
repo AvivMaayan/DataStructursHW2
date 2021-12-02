@@ -32,6 +32,9 @@ public:
     Player_ptr getPlayerPtr(Id id);
     Status addPlayer(Id id, Player_ptr player);
     Status removePlayer(Id id);
+    int getSizeOfLevel(); //number of players in this level
+    int getLevel(); //returns what level is this
+    void LevelToArray(Player_ptr* level_array); //makes an arranged array (by id) of Player_ptr out of the tree
 };
 
 #endif // LEVEL_H_

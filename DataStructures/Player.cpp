@@ -10,6 +10,11 @@ Group_ptr Player::getGroupPtr()
     return group;
 }
 
+int Player::getId() const
+{
+    return id;
+}
+
 void Player::setLevel(int new_level)
 {
     this->level = new_level;
