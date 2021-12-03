@@ -67,14 +67,17 @@ StatusType GetAllPlayersByLevel(void *DS, int GroupID, int **Players, int *numOf
     {
         return (StatusType)INVALID_INPUT;
     }
-
-    *Players = (int *)malloc(sizeof(int) * *numOfPlayers);
-    if (!*Players)
+    Status res;
+    try
     {
-        return (StatusType)ALLOCATION_ERROR;
+        res = ((Game *)DS)->GetAllPlayersByLevel(GroupID, Players, numOfPlayers);
     }
-
-    return (StatusType)((Game *)DS)->GetAllPlayersByLevel(GroupID, Players, numOfPlayers);
+    catch(const std::exception& e)
+    {
+        res = S_ALLOCATION_ERROR;
+    }
+    
+    return (StatusType)res;
 }
 
 StatusType GetGroupsHighestLevel(void *DS, int numOfGroups, int **Players)

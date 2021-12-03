@@ -108,13 +108,17 @@ typename Tree<T>::const_iterator &Tree<T>::const_iterator ::operator++()
     if (*this == tree->reverseBegin()) // no where to continue, biggest node
     {
         this->element = nullptr; // now it is end()
+        return *this;
+    }
+    if(this->element->getParent() == nullptr && this->element->getRight() == nullptr)
+    {   
+        this->element = nullptr; // now it is end()
+        return *this;
     }
     else if (this->element->getRight() != nullptr)
     { // the next bigger is in the right sub-tree
         this->element = this->element->getRight()->getMin();
     }
-    // need to check here if root or not - if root with no right son is sent
-    // to next_bigger, we get seg fault
     else // next big one is somewhere above
     {
         this->element = tree->next_bigger(this->element);
@@ -597,9 +601,15 @@ void Tree<T>::getKeysArray(int* keys)
 }*/
 
 template <class T>
-void Tree<T>::ArrayToTree(T* array,int* keys ,int start, int end)
+void Tree<T>::ArrayToTree(T* array, int* keys ,int start, int end)
 {
-    this->internalArrayToTree(nullptr, keys,  array, start, end);
+    root = internalArrayToTree(nullptr, keys,  array, start, end);
+    if(root == nullptr)
+    {
+        return;
+    }
+    left_most = root->getMin();
+    right_most = root->getMax();
 }
 
 template <class T>
@@ -611,8 +621,9 @@ TNode<T>* Tree<T>::internalArrayToTree(TNode<T>* parent, int* keys, T* array, in
     }
     int middle = (start + end) / 2;
     TNode<T>* curr = new TNode<T>(keys[middle], array[middle], parent);
-    curr->setLeft(internalArrayToTree(curr, keys, array, start, middle));
-    curr->setRight(internalArrayToTree(curr, keys, array, middle, start));
+    size++;
+    curr->setLeft(internalArrayToTree(curr, keys, array, start, middle - 1));
+    curr->setRight(internalArrayToTree(curr, keys, array, middle + 1, end));
     return curr;
 }
 

@@ -30,7 +30,7 @@ void Level::ArrayToLevel(Player_ptr *level_array, int size)
     {
         keys[i] = level_array[i]->getId();
     }
-    players.ArrayToTree(level_array, keys, 0, size);
+    players.ArrayToTree(level_array, keys, 0, size-1);
 }
 
 /**

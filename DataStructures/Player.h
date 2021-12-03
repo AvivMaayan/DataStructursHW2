@@ -20,6 +20,7 @@ private:
     Group_ptr group;
 
 public:
+    Player():id(0), level(-1), group(nullptr){}
     Player(int id, int level, Group_ptr group) : id(id), level(level), group(group) {}
     Player(const Player &copy) = default;
     ~Player() = default;

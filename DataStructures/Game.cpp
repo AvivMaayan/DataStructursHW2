@@ -19,34 +19,50 @@ int Game::getNumberOfLevels()
 
 
 // merging 2 groups to a new group. removing the old 2 from the tree.
-void Game::MergeGroups(int origID, int replaceID)
+Status Game::MergeGroups(int origID, int replaceID)
 {
-    Group_ptr new_group = make_shared<Group>();
     // finding the groups - o(logk)
     Group_ptr original = groups.getData(origID);
     Group_ptr replacement = groups.getData(replaceID);
+    if(!replacement || !original)
+    {
+        return S_FAILURE;
+    }
+    Group_ptr new_group = make_shared<Group>();
     int size_of_first_group = original->getNumberOfLevels();
     int size_of_second_group = replacement->getNumberOfLevels();
     int result_size = size_of_first_group + size_of_second_group; // the real result size might be smaller!
 
     // creating arrays of Level_ptr o(n + m)
-    Level_ptr *array1 = (Level_ptr *)malloc(size_of_first_group * sizeof(Level_ptr));
+    Level_ptr* array1 = new Level_ptr[size_of_first_group];
     if(!array1)
     {
         throw Allocation_Error();
     }
-    Level_ptr *array2 = (Level_ptr *)malloc(size_of_second_group * sizeof(Level_ptr));
+    for(int i=0; i< size_of_first_group; i++)
+    {
+        array1[i] = make_shared<Level>();
+    }
+    Level_ptr* array2 = new Level_ptr[size_of_second_group];
     if(!array2)
     {
-        delete array1;
+        delete[] array1;
         throw Allocation_Error();
     }
-    Level_ptr *result_array = (Level_ptr *)malloc(result_size * sizeof(Level_ptr));
+    for(int i=0; i< size_of_second_group; i++)
+    {
+        array2[i] = make_shared<Level>();
+    }
+    Level_ptr* result_array = new Level_ptr[result_size];
     if(!result_array)
     {
-        delete array1;
-        delete array2;
+        delete[] array1;
+        delete[] array2;
         throw Allocation_Error();
+    }
+    for(int i=0; i< result_size; i++)
+    {
+        result_array[i] = make_shared<Level>();
     }
     original->GroupToArray(array1);
     replacement->GroupToArray(array2);
@@ -62,14 +78,15 @@ void Game::MergeGroups(int origID, int replaceID)
 
     // rempving old groups o(logk)
     this->groups.getData(replaceID) = new_group;
-    this->groups.getData(origID) = nullptr;
+    this->groups.remove(origID);
+
 
     // adding the new group o(logk)
-    //groups.insert(replaceID, new_group);
 
-    delete array1;
-    delete array2;
-    delete result_array;
+    delete[] array1;
+    delete[] array2;
+    delete[] result_array;
+    return S_SUCCESS;
 }
 
 //return is the size of the new group array
@@ -155,7 +172,7 @@ void Game::MergePlayersOfSameLevel(Player_ptr *level1, Player_ptr *level2, int s
         i2++;
         res++;
     }
-    assert(res == size1 + size2 - 1); // making sure everyone is on the new array
+    
 }
 
 /**
@@ -168,31 +185,44 @@ void Game::MergeLevelsToSameGroup(Level_ptr level1, Level_ptr level2, Level_ptr 
     int size_of_second_level = level2->getSizeOfLevel();
     int result_size = size_of_first_level + size_of_second_level;
     //creating arrays of Player_ptr
-    Player_ptr* array1 = (Player_ptr*)malloc(size_of_first_level * sizeof(Player_ptr) );
+    Player_ptr* array1 = new Player_ptr[size_of_first_level];
     if(!array1)
     {
         throw Allocation_Error();
     }
-    Player_ptr* array2 = (Player_ptr*)malloc(size_of_second_level * sizeof(Player_ptr) );    
+    for(int i=0; i< size_of_first_level; i++)
+    {
+        array1[i] = make_shared<Player>();
+    }
+    Player_ptr* array2 = new Player_ptr[size_of_second_level];   
     if(!array2)
     {
-        delete array1;
+        delete[] array1;
         throw Allocation_Error();
     }
-    Player_ptr* result_array = (Player_ptr*)malloc(result_size * sizeof(Player_ptr) );    
+    for(int i=0; i< size_of_second_level; i++)
+    {
+        array2[i] = make_shared<Player>();
+    }
+    Player_ptr* result_array = new Player_ptr[result_size];   
     if(!result_array)
     {
-        delete array1;
-        delete array2;
+        delete[] array1;
+        delete[] array2;
         throw Allocation_Error();
     }
+    for(int i=0; i< result_size; i++)
+    {
+        result_array[i] = make_shared<Player>();
+    }
+
     level1->LevelToArray(array1);
     level2->LevelToArray(array2);
     MergePlayersOfSameLevel(array1, array2, size_of_first_level, size_of_second_level, result_array);
     result->ArrayToLevel(result_array, result_size);
-    delete array1;
-    delete array2;
-    delete result_array;
+    delete[] array1;
+    delete[] array2;
+    delete[] result_array;
 }
 
 void Game::UpdateGroupPtr(Level_ptr *level_array, int size, Group_ptr new_group)
@@ -295,16 +325,17 @@ Status Game::ReplaceGroup(int GroupID, int ReplacementID)
     {
         return S_FAILURE;
     }
+    Status res;
     try
     {
-        MergeGroups(GroupID, ReplacementID);
+        res = MergeGroups(GroupID, ReplacementID);
     }
     catch (const std::exception &e)
     {
         std::cerr << e.what() << '\n';
         return S_ALLOCATION_ERROR;
     }
-    return S_SUCCESS;
+    return res;
 }
 
 Status Game::IncreaseLevel(int PlayerID, int LevelIncrease)
@@ -358,7 +389,7 @@ Status Game::GetAllPlayersByLevel(int GroupID, int **Players, int *numOfPlayers)
 {
     if (GroupID < 0)
     {
-        return levels.getAllPlayersByLevel(Players, numOfPlayers);
+        return levels.getAllPlayersByLevel((*Players), numOfPlayers);
     }
     if (!groups.isExist(GroupID))
     {
@@ -367,7 +398,7 @@ Status Game::GetAllPlayersByLevel(int GroupID, int **Players, int *numOfPlayers)
     // we are using T& Tree<T>::(int key_to_find)
     // only when we know that Tree<T>.isExist(key_to_find) is true!
     Group_ptr group_ptr = groups.getData(GroupID);
-    return group_ptr->getAllPlayersByLevel(Players, numOfPlayers);
+    return group_ptr->getAllPlayersByLevel((*Players), numOfPlayers);
 }
 
 Status Game::GetGroupsHighestLevel(int numOfGroups, int **Players)

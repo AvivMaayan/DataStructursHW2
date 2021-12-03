@@ -37,7 +37,7 @@ void Group::ArrayToGroup(Level_ptr *level_array, int size)
     {
         keys[i] = level_array[i]->getLevel();
     }
-    levels.ArrayToTree(level_array, keys, 0, size);
+    levels.ArrayToTree(level_array, keys, 0, size - 1);
 }
 
 
@@ -122,21 +122,21 @@ bool Group::isEmpty()
  * within each level - lowest to highest id
  * @return SUCCESS if null array or just an array, ALLOCATION_ERROR otherwise
  * */
-Status Group::getAllPlayersByLevel(Id **players_array, int *num_of_players)
+Status Group::getAllPlayersByLevel(Id *players_array, int *num_of_players)
 {
     *num_of_players = levels.getSize();
     if (*num_of_players == 0)
     {
-        players_array = NULL;
+        players_array = new int[1];
         return S_SUCCESS;
     }
+    players_array = new int[*num_of_players];
     int i = 0;
     for (Tree<Level_ptr>::const_iterator levels_it = levels.reverseBegin(); levels_it != levels.end(); --levels_it)
     {
-        Tree<Player_ptr> level = levels_it.getData()->players;
-        for (Tree<Player_ptr>::const_iterator players_it = level.begin(); players_it != level.end(); ++players_it)
+        for (Tree<Player_ptr>::const_iterator players_it = levels_it.getData()->players.begin(); players_it != levels_it.getData()->players.end(); ++players_it)
         {
-            *players_array[i] = players_it.getKey();
+            players_array[i] = players_it.getKey();
         }
     }
     return S_SUCCESS;
@@ -153,9 +153,9 @@ void Group::GroupToArray(Level_ptr* level_array)
     int i=0;
     for(Tree<Level_ptr>::const_iterator it = levels.begin(); it != levels.end(); ++it)
     {
-        level_array[i]->players = it.getData()->players;
+        level_array[i] = it.getData(); 
         i++;
     }
-    assert(i == levels.getSize()-1); //making sure everyone got into level_array
+    
 }
 

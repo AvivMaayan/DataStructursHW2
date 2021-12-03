@@ -38,7 +38,7 @@ private:
     */
     int getNumberOfLevels();
     int MergeGroupArrays(Level_ptr *group1, Level_ptr *group2, int size1, int size2, Level_ptr *result);
-    void MergeGroups(int origID, int replaceID); // merging groups into a new group (removing old ones)
+    Status MergeGroups(int origID, int replaceID); // merging groups into a new group (removing old ones)
     void MergeLevelsToSameGroup(Level_ptr level1, Level_ptr level2, Level_ptr result); // merging 2 Levels into a large arranged by id Level
     void MergePlayersOfSameLevel(Player_ptr *level1, Player_ptr *level2, int size1, int size2, Player_ptr *result); // merging arrays created in LevelToArray into a large arranged array
     void UpdateGroupPtr(Level_ptr *level_array, int size, Group_ptr new_group); 
