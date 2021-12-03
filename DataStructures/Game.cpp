@@ -398,7 +398,8 @@ Status Game::GetAllPlayersByLevel(int GroupID, int **Players, int *numOfPlayers)
     // we are using T& Tree<T>::(int key_to_find)
     // only when we know that Tree<T>.isExist(key_to_find) is true!
     Group_ptr group_ptr = groups.getData(GroupID);
-    return group_ptr->getAllPlayersByLevel((*Players), numOfPlayers);
+    Status res = group_ptr->getAllPlayersByLevel((*Players), numOfPlayers);
+    return res;
 }
 
 Status Game::GetGroupsHighestLevel(int numOfGroups, int **Players)

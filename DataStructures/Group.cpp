@@ -127,10 +127,10 @@ Status Group::getAllPlayersByLevel(Id *players_array, int *num_of_players)
     *num_of_players = levels.getSize();
     if (*num_of_players == 0)
     {
-        players_array = new int[1];
+        players_array = (int*)malloc(sizeof(int));
         return S_SUCCESS;
     }
-    players_array = new int[*num_of_players];
+    players_array = (Id*)malloc(sizeof(Id) * *num_of_players);
     int i = 0;
     for (Tree<Level_ptr>::const_iterator levels_it = levels.reverseBegin(); levels_it != levels.end(); --levels_it)
     {
