@@ -24,6 +24,7 @@ class Level
 {
 public:
     Tree<Player_ptr> players; // players is a tree: key = id of players, data = pointer Players at this level from the group
+    
     Level() : players() {}
     Level(const Level &level) = delete;
     void ArrayToLevel(Player_ptr *level_array, int size); // creates a Level from a given array of players already arranged

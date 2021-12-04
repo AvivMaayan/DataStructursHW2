@@ -24,9 +24,9 @@ typedef shared_ptr<Group> Group_ptr;
 class Game
 {
 private:
-    Tree<Group_ptr> groups;
-    Group levels;  // all of the players form a group = key-level (int), data-Level(tree of players (id) in this level)
     Level players; // all of the players are "in" an abstract level = key-Id (int), data-level of the player(int)
+    Group levels;  // all of the players form a group = key-level (int), data-Level(tree of players (id) in this level)
+    Tree<Group_ptr> groups;
 
     /*
     --------------Not being used--------------
@@ -44,7 +44,7 @@ private:
     void UpdateGroupPtr(Level_ptr *level_array, int size, Group_ptr new_group); 
 
 public:
-    Game();
+    Game() = default;
     ~Game() = default;
 
     // functions from Library1:

@@ -4,19 +4,24 @@
 using std::cout;
 using std::endl;
 using std::string;
-
-Game::Game()
+    /*
+Game::~Game()
 {
-    groups = Tree<Group_ptr>();
-    levels = Group();
-    players = Level();
+    players.~Level();
+    levels.~Group();
+    groups.~Tree();
+
+    while (players.players.getSize() != 0)
+    {
+        RemovePlayer(players.players.begin().getKey());
+    }
 }
+  */
 
 int Game::getNumberOfLevels()
 {
     return levels.getNumberOfLevels();
 }
-
 
 // merging 2 groups to a new group. removing the old 2 from the tree.
 Status Game::MergeGroups(int origID, int replaceID)
@@ -247,7 +252,6 @@ void Game::UpdateGroupPtr(Level_ptr *level_array, int size, Group_ptr new_group)
        }
    }
 }
-
 
 ////////////////////////////////////////////////////////////////////////////////
 Status Game::AddGroup(int GroupID)

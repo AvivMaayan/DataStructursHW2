@@ -31,8 +31,8 @@ private:
     TNode<T> *internalSearch(TNode<T> *node, int key_to_find) const;
     TNode<T> *internalInsert(TNode<T> *node, int key_to_insert, const T &data, TNode<T> *to_return);
     TNode<T> *internalRemove(TNode<T> *node, int key_to_remove);
-    void internalClear(TNode<T> *root);
-    TNode<T>* internalArrayToTree(TNode<T>* parent, int* keys, T* array, int start, int end);
+    void internalClear(TNode<T> *root_ptr);
+    TNode<T> *internalArrayToTree(TNode<T> *parent, int *keys, T *array, int start, int end);
 
 public:
     class const_iterator;
@@ -49,10 +49,9 @@ public:
     const_iterator search(const int key) const;
     // T& insert(int key);
     T &insert(int key, const T &data);
-    void remove(int key);                            // remove a vertice by its key
-    void removeByIt(const const_iterator &iterator); // remove a vertice pointed by an iterator
-    //void getKeysArray(int* keys);
-    void ArrayToTree(T* array,int* keys, int start, int end);
+    void remove(int key); // remove a vertice by its key
+    // void getKeysArray(int* keys);
+    void ArrayToTree(T *array, int *keys, int start, int end);
     // to be deleted at the end:
     void printTree() const;
     void printTree(const std::string &prefix, const TNode<T> *node, bool isLeft) const;
@@ -110,8 +109,8 @@ typename Tree<T>::const_iterator &Tree<T>::const_iterator ::operator++()
         this->element = nullptr; // now it is end()
         return *this;
     }
-    if(this->element->getParent() == nullptr && this->element->getRight() == nullptr)
-    {   
+    if (this->element->getParent() == nullptr && this->element->getRight() == nullptr)
+    {
         this->element = nullptr; // now it is end()
         return *this;
     }
@@ -207,14 +206,14 @@ Tree<T>::Tree(const Tree<T> &copy)
 }
 
 template <class T>
-void Tree<T>::internalClear(TNode<T> *root)
+void Tree<T>::internalClear(TNode<T> *root_ptr)
 {
-    if (root != nullptr)
+    if (root_ptr != nullptr)
     {
-        internalClear(root->getRight());
-        internalClear(root->getLeft());
-        delete root;
-        root = nullptr;
+        internalClear(root_ptr->getRight());
+        internalClear(root_ptr->getLeft());
+        delete root_ptr;
+        root_ptr = nullptr;
     }
 }
 
@@ -222,6 +221,9 @@ template <class T>
 Tree<T>::~Tree()
 {
     internalClear(root);
+    root = nullptr;
+    left_most = nullptr;
+    right_most = nullptr;
 }
 
 template <class T>
@@ -443,7 +445,6 @@ TNode<T> *Tree<T>::internalInsert(TNode<T> *node, int key_to_insert, const T &da
         to_return = new TNode<T>(key_to_insert, data);
         size++;
         return to_return;
-        
     }
     else
     {
@@ -469,27 +470,6 @@ TNode<T> *Tree<T>::internalInsert(TNode<T> *node, int key_to_insert, const T &da
     return rotate(node);
 }
 
-// USE ONLY WHEN TYPE T HAS AN EMPTY C'TOR!
-/*template <class T>
-T& Tree<T>::insert(int key)
-{
-    TNode<T> *to_return;
-    root = internalInsert(root, key, T(), to_return);
-    left_most = root->getMin();
-    right_most = root->getMax();
-    return to_return->getData();
-}
-
-template <class T>
-T& Tree<T>::insert(int key, )
-{
-    TNode<T> *to_return;
-    root = internalInsert(root, key, T(), to_return);
-    left_most = root->getMin();
-    right_most = root->getMax();
-    return to_return->getData();
-}
-*/
 template <class T>
 T &Tree<T>::insert(int key, const T &data)
 {
@@ -514,7 +494,6 @@ TNode<T> *Tree<T>::internalRemove(TNode<T> *node, int key_to_remove)
             node->setKey(next_node->getKey());
             node->setData(next_node->getDataConst());
             node->setRight(internalRemove(node->getRight(), next_node->getKey()));
-            // rotate?
         }
         else
         {
@@ -566,12 +545,6 @@ void Tree<T>::remove(int key)
 }
 
 template <class T>
-void Tree<T>::removeByIt(const Tree<T>::const_iterator &iterator)
-{
-    // Leaving this out for now
-}
-
-template <class T>
 typename Tree<T>::const_iterator Tree<T>::begin() const
 {
     return Tree<T>::const_iterator(this, left_most);
@@ -601,10 +574,10 @@ void Tree<T>::getKeysArray(int* keys)
 }*/
 
 template <class T>
-void Tree<T>::ArrayToTree(T* array, int* keys ,int start, int end)
+void Tree<T>::ArrayToTree(T *array, int *keys, int start, int end)
 {
-    root = internalArrayToTree(nullptr, keys,  array, start, end);
-    if(root == nullptr)
+    root = internalArrayToTree(nullptr, keys, array, start, end);
+    if (root == nullptr)
     {
         return;
     }
@@ -613,14 +586,14 @@ void Tree<T>::ArrayToTree(T* array, int* keys ,int start, int end)
 }
 
 template <class T>
-TNode<T>* Tree<T>::internalArrayToTree(TNode<T>* parent, int* keys, T* array, int start, int end)
+TNode<T> *Tree<T>::internalArrayToTree(TNode<T> *parent, int *keys, T *array, int start, int end)
 {
-    if(start > end)
+    if (start > end)
     {
         return nullptr;
     }
     int middle = (start + end) / 2;
-    TNode<T>* curr = new TNode<T>(keys[middle], array[middle], parent);
+    TNode<T> *curr = new TNode<T>(keys[middle], array[middle], parent);
     size++;
     curr->setLeft(internalArrayToTree(curr, keys, array, start, middle - 1));
     curr->setRight(internalArrayToTree(curr, keys, array, middle + 1, end));

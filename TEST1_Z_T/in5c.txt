@@ -32,5 +32,10 @@ ReplaceGroups 1 2//success,trying to test if moving from 1 group to the other ch
 GetAllPlayersByLevel 2 //success, should now print the same as 3 lines above
 RemovePlayer 1 // success
 GetAllPlayersByLevel -5 //success,trying to see what happens after removal
+RemovePlayer 2
+RemovePlayer 6
+RemovePlayer 3
+RemovePlayer 4
+RemovePlayer 5
 //stress testing :^)
 Quit
