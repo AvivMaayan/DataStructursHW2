@@ -1,0 +1,57 @@
+Init done.
+AddGroup: SUCCESS
+AddPlayer: SUCCESS
+Highest level player is: 3
+Highest level player is: 3
+GetHighestLevel: INVALID_INPUT
+GetHighestLevel: FAILURE
+RemovePlayer: SUCCESS
+Highest level player is: -1
+Highest level player is: -1
+AddPlayer: SUCCESS
+Highest level player is: 1
+AddPlayer: SUCCESS
+Highest level player is: 3
+RemovePlayer: SUCCESS
+Highest level player is: 3
+AddPlayer: SUCCESS
+Highest level player is: 3
+IncreaseLevel: SUCCESS
+Highest level player is: 1
+Highest level player is: 1
+AddGroup: SUCCESS
+AddGroup: SUCCESS
+AddPlayer: SUCCESS
+GetHighestLevel: FAILURE
+Highest level player is: 2
+RemovePlayer: SUCCESS
+Highest level player is: 2
+RemovePlayer: SUCCESS
+GetHighestLevel: FAILURE
+Highest level player is: 3
+AddPlayer: SUCCESS
+ReplaceGroup: SUCCESS
+Highest level player is: 3
+GetHighestLevel: FAILURE
+Highest level player is: 3
+RemovePlayer: SUCCESS
+Highest level player is: 3
+AddPlayer: SUCCESS
+Highest level player is: 9
+ReplaceGroup: SUCCESS
+GetHighestLevel: FAILURE
+Highest level player is: 9
+Highest level player is: 9
+ReplaceGroup: FAILURE
+GetHighestLevel: FAILURE
+Highest level player is: 9
+GetHighestLevel: FAILURE
+Highest level player is: 9
+RemovePlayer: SUCCESS
+Highest level player is: 3
+GetHighestLevel: FAILURE
+Highest level player is: 3
+RemovePlayer: FAILURE
+RemovePlayer: SUCCESS
+Highest level player is: -1
+Quit done.

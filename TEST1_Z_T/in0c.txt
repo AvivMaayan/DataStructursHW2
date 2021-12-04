@@ -1,0 +1,68 @@
+Init 
+//addGroup
+AddGroup 1 //success
+AddGroup 1 //failure
+AddGroup 3 //success
+AddGroup 0 //invalid_id.
+//addPlayer ( playerId , GroupID , Level)
+//need to add here Invalid Input 
+AddPlayer -1 -1 -1//INVALID_INPUT
+AddPlayer -1 2 1 //Invalid_Input
+AddPlayer 1 -2 1 //Invalid_input
+AddPlayer 1 2 -3 //Invalid_Input
+AddPlayer 1 1 1 //success
+AddPlayer 1 1 1 //failure (same id, same group, same level)
+AddPlayer 1 1 3 //failure (same id ,different level)
+AddPlayer 1 3 1 //failure (same id, different Group(that exists),same level)
+AddPlayer 1 3 3 // failure (same id, different Group(that exists),other level)
+AddPlayer 1 2 1 //failure( same id, different Group(doesn’t exist),same  level)
+AddPlayer 1 2 3 // failure (same id, different Group(doesn’t exist), other level
+AddPlayer 2 3 1 //success (same id ,different Group (exists),same level)
+AddPlayer 3 1 3 //success (same id , different Group(exists),different level)
+AddPlayer 1 1 1 //failure (just trying again after adding another one)
+//STRESS TEST!!,now only Group 1 and 3 exist.
+AddGroup -6 //Invalid_input
+AddGroup -5 //Invalid_input
+AddGroup -4 //Invalid_input
+AddGroup -3 //Invalid_input
+AddGroup -2 //Invalid_input
+AddGroup -1 //Invalid_input
+AddGroup 0 //Invalid_input
+AddGroup 1 //Failure
+AddGroup 2  //success 
+AddGroup 3  //failure
+AddGroup 4 //success 
+AddGroup 5 //success 
+AddGroup 6 //success 
+AddGroup 7 //success 
+AddGroup 8 //success 
+AddGroup 9 //success 
+AddGroup 10 //success 
+AddGroup 11 //success 
+AddGroup 12 //success 
+AddGroup 13 //success 
+AddGroup 14//success
+//now only player 1 ,2 ,3 exist., lets add more.(and try to inject some illegals)
+AddPlayer 4 4 4 //success
+AddPlayer 123 4 -1 //Invalid_input
+AddPlayer 5 5 5 //success
+AddPlayer 123 5 -1 //Invalid_input
+AddPlayer 6 6 6 //success
+AddPlayer 123 6 -1 //Invalid_input
+AddPlayer 7 7 7 //success
+AddPlayer 123 7 -1 //Invalid_input
+AddPlayer 8 8 8 //success
+AddPlayer 123 8 -1 //Invalid_input
+AddPlayer 9 9 9 //success
+AddPlayer 123 9 -1 //Invalid_input
+AddPlayer 10 10 10 //success
+AddPlayer 123 10 -1 //Invalid_input
+AddPlayer 11 11 11 //success
+AddPlayer 123 11 -1 //Invalid_input
+AddPlayer 12 12 12 //success
+AddPlayer 123 12 -1 //Invalid_input
+AddPlayer 13 13 13 //success
+AddPlayer 123 13 -1 //Invalid_input
+AddPlayer 14 14 14  //success
+AddPlayer 123 14 -1 //Invalid_input
+Quit //end of AddPlayerTesting&AddGroup.

@@ -32,6 +32,8 @@ Status Game::MergeGroups(int origID, int replaceID)
     int size_of_first_group = original->getNumberOfLevels();
     int size_of_second_group = replacement->getNumberOfLevels();
     int result_size = size_of_first_group + size_of_second_group; // the real result size might be smaller!
+    //as we know - each player could be in only one group ->
+    int sum_of_players = original->getNumOfPlayers() + replacement->getNumOfPlayers();
 
     // creating arrays of Level_ptr o(n + m)
     Level_ptr* array1 = new Level_ptr[size_of_first_group];
@@ -74,7 +76,7 @@ Status Game::MergeGroups(int origID, int replaceID)
     UpdateGroupPtr(result_array, result_size, new_group);
 
     // making it a group o(n + m)
-    new_group->ArrayToGroup(result_array, result_size);
+    new_group->ArrayToGroup(result_array, result_size, sum_of_players);
 
     // rempving old groups o(logk)
     this->groups.getData(replaceID) = new_group;
@@ -389,16 +391,18 @@ Status Game::GetAllPlayersByLevel(int GroupID, int **Players, int *numOfPlayers)
 {
     if (GroupID < 0)
     {
-        return levels.getAllPlayersByLevel((*Players), numOfPlayers);
+        return levels.getAllPlayersByLevel(Players, numOfPlayers);
     }
     if (!groups.isExist(GroupID))
     {
+        //not sure if this is really the right way!
+        (*Players) = NULL;
         return S_FAILURE;
     }
     // we are using T& Tree<T>::(int key_to_find)
     // only when we know that Tree<T>.isExist(key_to_find) is true!
     Group_ptr group_ptr = groups.getData(GroupID);
-    Status res = group_ptr->getAllPlayersByLevel((*Players), numOfPlayers);
+    Status res = group_ptr->getAllPlayersByLevel(Players, numOfPlayers);
     return res;
 }
 
