@@ -7,6 +7,7 @@
 using std::cout;
 using std::endl;
 using std::shared_ptr;
+using std::weak_ptr;
 
 class Group;
 

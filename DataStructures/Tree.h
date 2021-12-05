@@ -223,9 +223,13 @@ TNode<T>* Tree<T>::internalClear(TNode<T> *root_ptr)
 template <class T>
 Tree<T>::~Tree()
 {
+    cout << "before: " << endl;
+    this->printTree();
     root = internalClear(root);
     left_most = nullptr;
     right_most = nullptr;
+    cout << "after: " << endl;
+    this->printTree();
 }
 
 template <class T>

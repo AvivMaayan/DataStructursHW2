@@ -1,12 +1,13 @@
 #include "Tree.h"
+#include "Game.h"
 
 int main()
 {
-    Tree<int> test_tree;
-    for (int i = 0; i < 5; i++)
+    Game game;
+    game.AddGroup(1);
+    for (int i = 1; i <= 5; i++)
     {
-        test_tree.insert(i,i);
+        game.AddPlayer(i,1,i);
     }
-    test_tree.clearAll();
     return 0;
 }
