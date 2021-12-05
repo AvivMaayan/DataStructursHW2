@@ -31,7 +31,7 @@ private:
     TNode<T> *internalSearch(TNode<T> *node, int key_to_find) const;
     TNode<T> *internalInsert(TNode<T> *node, int key_to_insert, const T &data, TNode<T> *to_return);
     TNode<T> *internalRemove(TNode<T> *node, int key_to_remove);
-    void internalClear(TNode<T> *root_ptr);
+    TNode<T>* internalClear(TNode<T> *root_ptr);
     TNode<T> *internalArrayToTree(TNode<T> *parent, int *keys, T *array, int start, int end);
 
 public:
@@ -55,6 +55,7 @@ public:
     // to be deleted at the end:
     void printTree() const;
     void printTree(const std::string &prefix, const TNode<T> *node, bool isLeft) const;
+    void clearAll();
 };
 
 template <class T>
@@ -206,22 +207,23 @@ Tree<T>::Tree(const Tree<T> &copy)
 }
 
 template <class T>
-void Tree<T>::internalClear(TNode<T> *root_ptr)
+TNode<T>* Tree<T>::internalClear(TNode<T> *root_ptr)
 {
     if (root_ptr != nullptr)
     {
-        internalClear(root_ptr->getRight());
-        internalClear(root_ptr->getLeft());
+        root_ptr->setRight(internalClear(root_ptr->getRight()));
+        root_ptr->setLeft(internalClear(root_ptr->getLeft()));
         delete root_ptr;
-        root_ptr = nullptr;
+        size--;
+        cout << "something was deleted, size is: " << size << endl;
     }
+    return nullptr;
 }
 
 template <class T>
 Tree<T>::~Tree()
 {
-    internalClear(root);
-    root = nullptr;
+    root = internalClear(root);
     left_most = nullptr;
     right_most = nullptr;
 }
@@ -624,4 +626,13 @@ void Tree<T>::printTree(const std::string &prefix, const TNode<T> *node, bool is
     }
 }
 
+template <class T>
+void Tree<T>::clearAll()
+{
+    cout << "before:" << endl;
+    printTree();
+    root = internalClear(root);
+    cout << "after:" << endl;
+    printTree();
+}
 #endif // TREE_H_
