@@ -7,7 +7,7 @@ int Player::getLevel() const
 
 Group_ptr Player::getGroupPtr()
 {
-    return group;
+    return Group_ptr(group);
 }
 
 int Player::getId() const
@@ -22,7 +22,7 @@ void Player::setLevel(int new_level)
 
 void Player::setGroup(Group_ptr new_group)
 {
-    this->group = new_group;
+    this->group = (W_Group_ptr)new_group;
 }
 
 void Player::printPlayer() const

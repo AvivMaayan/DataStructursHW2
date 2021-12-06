@@ -215,7 +215,6 @@ TNode<T>* Tree<T>::internalClear(TNode<T> *root_ptr)
         root_ptr->setLeft(internalClear(root_ptr->getLeft()));
         delete root_ptr;
         size--;
-        cout << "something was deleted, size is: " << size << endl;
     }
     return nullptr;
 }
@@ -223,13 +222,9 @@ TNode<T>* Tree<T>::internalClear(TNode<T> *root_ptr)
 template <class T>
 Tree<T>::~Tree()
 {
-    cout << "before: " << endl;
-    this->printTree();
     root = internalClear(root);
     left_most = nullptr;
     right_most = nullptr;
-    cout << "after: " << endl;
-    this->printTree();
 }
 
 template <class T>

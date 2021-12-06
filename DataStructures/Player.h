@@ -12,16 +12,16 @@ using std::weak_ptr;
 class Group;
 
 typedef shared_ptr<Group> Group_ptr;
+typedef weak_ptr<Group> W_Group_ptr;
 
 class Player
 {
 private:
     int id;
     int level;
-    Group_ptr group;
+    W_Group_ptr group;
 
 public:
-    Player():id(0), level(-1), group(nullptr){}
     Player(int id, int level, Group_ptr group) : id(id), level(level), group(group) {}
     Player(const Player &copy) = default;
     ~Player() = default;

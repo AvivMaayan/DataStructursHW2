@@ -134,6 +134,11 @@ Status Group::getAllPlayersByLevel(Id **players_array, int *num_of_players)
         return S_SUCCESS;
     }
     *players_array = (Id*)malloc(sizeof(Id) * *num_of_players);
+    if (!*players_array)
+    {
+        return S_ALLOCATION_ERROR;
+    }
+    
     int i = 0;
     for (Tree<Level_ptr>::const_iterator levels_it = levels.reverseBegin(); levels_it != levels.end(); --levels_it)
     {

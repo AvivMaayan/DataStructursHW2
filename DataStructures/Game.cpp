@@ -197,20 +197,20 @@ void Game::MergeLevelsToSameGroup(Level_ptr level1, Level_ptr level2, Level_ptr 
     {
         throw Allocation_Error();
     }
-    for(int i=0; i< size_of_first_level; i++)
+    /**for(int i=0; i< size_of_first_level; i++)
     {
         array1[i] = make_shared<Player>();
-    }
+    }*/
     Player_ptr* array2 = new Player_ptr[size_of_second_level];   
     if(!array2)
     {
         delete[] array1;
         throw Allocation_Error();
     }
-    for(int i=0; i< size_of_second_level; i++)
+    /**for(int i=0; i< size_of_second_level; i++)
     {
         array2[i] = make_shared<Player>();
-    }
+    }*/
     Player_ptr* result_array = new Player_ptr[result_size];   
     if(!result_array)
     {
@@ -218,10 +218,10 @@ void Game::MergeLevelsToSameGroup(Level_ptr level1, Level_ptr level2, Level_ptr 
         delete[] array2;
         throw Allocation_Error();
     }
-    for(int i=0; i< result_size; i++)
+    /**for(int i=0; i< result_size; i++)
     {
         result_array[i] = make_shared<Player>();
-    }
+    }*/
 
     level1->LevelToArray(array1);
     level2->LevelToArray(array2);
@@ -413,6 +413,11 @@ Status Game::GetAllPlayersByLevel(int GroupID, int **Players, int *numOfPlayers)
 Status Game::GetGroupsHighestLevel(int numOfGroups, int **Players)
 {
     int i = 0;
+    *Players = (int *)malloc(sizeof(int) * numOfGroups);
+    if (!*Players)
+    {
+        return S_ALLOCATION_ERROR;
+    }
     for (Tree<Group_ptr>::const_iterator group_iterator = groups.begin(); group_iterator != groups.end() && i < numOfGroups; ++group_iterator)
     {
         if (!group_iterator.getData()->isEmpty())
@@ -423,6 +428,7 @@ Status Game::GetGroupsHighestLevel(int numOfGroups, int **Players)
     }
     if (i < numOfGroups) // more space in the array then num of not empty groups
     {
+        free(*Players);
         return S_FAILURE;
     }
     return S_SUCCESS;
