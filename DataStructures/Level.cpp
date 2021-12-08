@@ -6,15 +6,7 @@ Player_ptr Level::getPlayerPtr(Id id)
     return players.getData(id);
 }
 
-/**
- * @e o(log(n))
- * @param .
- * n is players in group
- *  assuming and input is valid
- * @return SUCCESS only
-// REMEMER TO CHECK AND ADD IF NEDEED
-// BAD ALLOC CHECK
- * */
+
 Status Level::addPlayer(Id id, Player_ptr player)
 {
     players.insert(id, player);
