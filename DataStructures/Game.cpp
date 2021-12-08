@@ -4,19 +4,6 @@
 using std::cout;
 using std::endl;
 using std::string;
-    /*
-Game::~Game()
-{
-    players.~Level();
-    levels.~Group();
-    groups.~Tree();
-
-    while (players.players.getSize() != 0)
-    {
-        RemovePlayer(players.players.begin().getKey());
-    }
-}
-  */
 
 int Game::getNumberOfLevels()
 {
@@ -148,7 +135,7 @@ int Game::MergeGroupArrays(Level_ptr *group1, Level_ptr *group2, int size1, int 
 
 void Game::MergePlayersOfSameLevel(Player_ptr *level1, Player_ptr *level2, int size1, int size2, Player_ptr *result) // merging arrays created in LevelToArray into a large arranged array
 {
-    // merge sorting the sh*t out of these arrayyyyssssss
+    // merge sorting 
     int i1 = 0, i2 = 0;
     int res = 0;
     while (i1 < size1 && i2 < size2)
@@ -197,20 +184,14 @@ void Game::MergeLevelsToSameGroup(Level_ptr level1, Level_ptr level2, Level_ptr 
     {
         throw Allocation_Error();
     }
-    /**for(int i=0; i< size_of_first_level; i++)
-    {
-        array1[i] = make_shared<Player>();
-    }*/
+
     Player_ptr* array2 = new Player_ptr[size_of_second_level];   
     if(!array2)
     {
         delete[] array1;
         throw Allocation_Error();
     }
-    /**for(int i=0; i< size_of_second_level; i++)
-    {
-        array2[i] = make_shared<Player>();
-    }*/
+   
     Player_ptr* result_array = new Player_ptr[result_size];   
     if(!result_array)
     {
@@ -218,11 +199,6 @@ void Game::MergeLevelsToSameGroup(Level_ptr level1, Level_ptr level2, Level_ptr 
         delete[] array2;
         throw Allocation_Error();
     }
-    /**for(int i=0; i< result_size; i++)
-    {
-        result_array[i] = make_shared<Player>();
-    }*/
-
     level1->LevelToArray(array1);
     level2->LevelToArray(array2);
     MergePlayersOfSameLevel(array1, array2, size_of_first_level, size_of_second_level, result_array);
@@ -234,16 +210,6 @@ void Game::MergeLevelsToSameGroup(Level_ptr level1, Level_ptr level2, Level_ptr 
 
 void Game::UpdateGroupPtr(Level_ptr *level_array, int size, Group_ptr new_group)
 {
-    /*
-    for(int i=0; i < size; i++)
-    {
-        //Tree<Player_ptr> level_tree = level_array[i]->players;
-        for(Tree<Player_ptr>::const_iterator it = level_array[i]->players.begin() ; it != level_array[i]->players.end(); ++it)
-        {
-            it.getData()->setGroup(new_group);
-        }
-    }
-    */
    for (int i = 0; i < size; i++)
    {
        for (auto it = level_array[i]->players.begin(); it != level_array[i]->players.end(); ++it)

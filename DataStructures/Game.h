@@ -28,14 +28,6 @@ private:
     Group levels;  // all of the players form a group = key-level (int), data-Level(tree of players (id) in this level)
     Tree<Group_ptr> groups;
 
-    /*
-    --------------Not being used--------------
-    Group getGroup(int group_id);
-    int getLevel(Id PlayerID);
-    Id GameHighestLevelPlayer();                     // returns player on the highest level. if there are a few, returns the lowest id
-    Status GameAddNewPlayer(Id PlayerID, int level); // adding a *new* player to the players tree. assuming that the player really is new
-    Status GameRemovePlayer(Id PlayerID);            // removing a player from the players tree
-    */
     int getNumberOfLevels();
     int MergeGroupArrays(Level_ptr *group1, Level_ptr *group2, int size1, int size2, Level_ptr *result);
     Status MergeGroups(int origID, int replaceID); // merging groups into a new group (removing old ones)

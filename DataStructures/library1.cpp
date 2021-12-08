@@ -76,13 +76,7 @@ StatusType GetGroupsHighestLevel(void *DS, int numOfGroups, int **Players)
     {
         return (StatusType)INVALID_INPUT;
     }
-/*
-    *Players = (int *)malloc(sizeof(int) * numOfGroups);
-    if (!Players)
-    {
-        return (StatusType)ALLOCATION_ERROR;
-    }
-*/  
+ 
     return (StatusType)((Game *)DS)->GetGroupsHighestLevel(numOfGroups, Players);
 }
 

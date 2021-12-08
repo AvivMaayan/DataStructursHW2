@@ -74,23 +74,7 @@ Level_ptr Group::getLevelPtr(int level)
     return levels.getData(level);
 }
 
-/**
- * @e o(log(n))
- * @param .
- * n is players in group
- * assuming valid input, player exists -> we know his level (from the Stack)
- * WHAT ABOUT BAD ALLOC CHECK?
- * */
 
-/*
-Status Group::updateLevel(Id id, Player_ptr player, int increasement)
-{
-    int level = player->getLevel();
-    Level players_tree = players.getData(level);
-    players_tree.remove(id);
-    return addPlayer(id, player, level + increasement);
-}
-*/
 
 /**
  * @e o(1)

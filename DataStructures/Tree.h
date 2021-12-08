@@ -181,12 +181,6 @@ const int Tree<T>::const_iterator ::getKey() const
     return this->element->getKey();
 }
 
-/**template <class T>
-void Tree<T>::const_iterator ::setElement(TNode<T> *node)
-{
-    this->element = node;
-}*/
-
 template <class T>
 TNode<T> *Tree<T>::const_iterator ::getNode() const
 {
@@ -359,8 +353,6 @@ TNode<T> *Tree<T>::next_smaller(TNode<T> *vertice) const
     return next_smaller(parent);
 }
 
-// the tree is balanced. worst case we get 2*h (h is height of tree)
-// most cases, i think this is actually more efficient (if the tree is very tall)
 template <class T>
 TNode<T> *Tree<T>::next_bigger(TNode<T> *vertice) const
 {
@@ -562,17 +554,6 @@ typename Tree<T>::const_iterator Tree<T>::end() const
 {
     return Tree<T>::const_iterator(this, nullptr);
 }
-
-/**
-template <class T>
-void Tree<T>::getKeysArray(int* keys)
-{
-    int i = 0;
-    for(const_iterator it = begin(); it != end(); ++it)
-    {
-        keys[i] = it
-    }
-}*/
 
 template <class T>
 void Tree<T>::ArrayToTree(T *array, int *keys, int start, int end)
