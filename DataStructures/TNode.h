@@ -33,7 +33,7 @@ public:
     void setParent(TNode<T> *node);
     void setLeft(TNode<T> *node);
     void setRight(TNode<T> *node);
-    void setKey(int key); // dangerous function! only used by Tree
+    void setKey(int key); //dangerous function! only used by Tree
     void updateBalance();
     void updateHeight();
     int calculate_update_balance();

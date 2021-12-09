@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include "TNode.h"
-#include "exeptions.h"
 #include <cassert>
 #include <memory>
 
@@ -47,17 +46,15 @@ public:
     bool isExist(int key_to_find) const;
     T &getData(int key_to_find) const;
     const_iterator search(const int key) const;
-    // T& insert(int key);
     T &insert(int key, const T &data);
     void remove(int key); // remove a vertice by its key
-    // void getKeysArray(int* keys);
     void ArrayToTree(T *array, int *keys, int start, int end);
-    // to be deleted at the end:
     void printTree() const;
     void printTree(const std::string &prefix, const TNode<T> *node, bool isLeft) const;
     void clearAll();
 };
 
+//This iterator is calld const because the TNodes' keys are immutable
 template <class T>
 class Tree<T>::const_iterator
 {
@@ -68,7 +65,7 @@ private:
         : tree(tree), element(element) {}
     friend class Tree<T>;
     TNode<T> *getNode() const;
-    // void setElement(TNode<T> *node);
+
 public:
     const_iterator(const const_iterator &copy) = default;
     ~const_iterator() = default;
@@ -86,21 +83,6 @@ public:
 ////////////////////////IMPLEMENTATION///////////////////////
 
 //////// const_iterator ////////
-
-/**template <class T>
-Tree<T>::const_iterator ::const_iterator(const const_iterator &copy)
-{
-    this->element = copy.element;
-    this->tree = copy.tree;
-
-
-template <class T>
-typename Tree<T>::const_iterator &Tree<T>::const_iterator ::operator=(const const_iterator &it)
-{
-    this->element = it.element;
-    return *this;
-}
-}*/
 
 template <class T>
 typename Tree<T>::const_iterator &Tree<T>::const_iterator ::operator++()
@@ -165,7 +147,7 @@ T &Tree<T>::const_iterator ::getData() const
 {
     if (this->element == nullptr)
     {
-        throw Invalid_Input();
+        throw std::invalid_argument( "Null arg" );
     }
     return this->element->getData();
 }
@@ -175,7 +157,7 @@ const int Tree<T>::const_iterator ::getKey() const
 {
     if (this->element == nullptr)
     {
-        throw Invalid_Input();
+        throw std::invalid_argument( "Null arg" );
     }
 
     return this->element->getKey();
@@ -262,16 +244,6 @@ TNode<T> *Tree<T>::LL(TNode<T> *not_balanced)
     }
 
     A->setParent(parent);
-    // changing to new heights:
-    /**if(A_orig_balance == 0) {
-        not_balanced->setHeight(not_balanced->getHeight()-1); //lowering not_balanced by 1
-        A->setHeight(A->getHeight()++);
-    }
-    else { //for sure A_orig_balance == 1
-        not_balanced->height-=2;
-    }
-    A->calculate_update_balance();
-    not_balanced->calculate_update_balance();*/
     not_balanced->updateHeight();
     not_balanced->updateBalance();
     A->updateHeight();
@@ -307,16 +279,6 @@ TNode<T> *Tree<T>::RR(TNode<T> *not_balanced)
         }
     }
     A->setParent(parent);
-    // changing to new heights:
-    /**if(A_orig_balance == 0) {
-        not_balanced->height++;
-        A->height++;
-    }
-    else { //for sure A_orig_balance == -1
-        not_balanced->height+=2;
-    }
-    A->calculate_update_balance();
-    not_balanced->calculate_update_balance();*/
     not_balanced->updateHeight();
     not_balanced->updateBalance();
     A->updateHeight();
@@ -343,8 +305,6 @@ TNode<T> *Tree<T>::RL(TNode<T> *not_balanced)
 template <class T>
 TNode<T> *Tree<T>::next_smaller(TNode<T> *vertice) const
 {
-    assert(vertice->getParent() != nullptr); // vertice can't be the root when getting here
-    assert(vertice != left_most);            // vertice can't be the biggest leaf when geting here
     TNode<T> *parent = vertice->getParent();
     if (parent->getRight() == vertice)
     { // vertice is bigger than his parent
@@ -356,8 +316,6 @@ TNode<T> *Tree<T>::next_smaller(TNode<T> *vertice) const
 template <class T>
 TNode<T> *Tree<T>::next_bigger(TNode<T> *vertice) const
 {
-    // assert(vertice->getParent() != nullptr); //vertice can't be the root when getting here
-    // assert(vertice != left_most);            //vertice can't be the biggest leaf when geting here
     TNode<T> *parent = vertice->getParent();
     if (parent->getLeft() == vertice)
     { // vertice is smaller than his parent
@@ -444,7 +402,7 @@ TNode<T> *Tree<T>::internalInsert(TNode<T> *node, int key_to_insert, const T &da
         int key = node->getKey();
         if (key_to_insert == key)
         {
-            // Do we want to enable information updating?//
+            //We chose to enable information updating//
             node->setData(data);
         }
         else if (key_to_insert > key)

@@ -54,6 +54,8 @@ int Level::getSizeOfLevel() // number of players in this level
 }
 int Level::getLevel() // returns what level is this
 {
+    //In our implemantation, a Level is never empty
+    //therfore no exception will be thrown
     return players.begin().getData()->getLevel();
 }
 
